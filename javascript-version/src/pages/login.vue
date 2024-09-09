@@ -77,18 +77,16 @@ const isPasswordVisible = ref(false)
         <VCardText>
           <VForm @submit.prevent="userLogin">
             <VRow>
-              <!-- email -->
               <VCol cols="12">
                 <VTextField v-model="form.email" autofocus label="아이디" type="email" />
               </VCol>
 
-              <!-- password -->
               <VCol cols="12">
                 <VTextField v-model="form.password" label="비밀번호" :type="isPasswordVisible ? 'text' : 'password'"
                   :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
                   @click:append-inner="isPasswordVisible = !isPasswordVisible" />
                   <p v-if="errorMessageCntBox">{{ errorMessageCnt }}</p>
-                <!-- remember me checkbox -->
+
                 <div class="d-flex align-center justify-space-between flex-wrap my-6">
                   <VCheckbox v-model="form.remember" label="아이디 저장" />
 
@@ -97,13 +95,11 @@ const isPasswordVisible = ref(false)
                   </a>
                 </div>
 
-                <!-- login button -->
                 <VBtn block type="submit">
                   Login
                 </VBtn>
               </VCol>
 
-              <!-- create account -->
               <VCol cols="12" class="text-body-1 text-center">
                 <span class="d-inline-block">
                   계정이 없으신가요?
