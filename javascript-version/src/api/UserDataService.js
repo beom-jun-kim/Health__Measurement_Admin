@@ -17,10 +17,22 @@ class UserDataService {
     return await http.get(`/admin/id?name=${name}&phoneNumber=${phoneNumber}`);
   }
   async findpassword(data) {
-    return await http.post("/admin/verification",data);
+    return await http.post("/admin/verification", data);
   }
   async resetPwd(data) {
-    return await http.patch("/admin/password",data);
+    return await http.patch("/admin/password", data);
+  }
+  async getUserInfo() {
+    return await http.get("/admin/info");
+  }
+  async patchUserInfo(data) {
+    return await http.patch("/admin/info", data);
+  }
+  async patchUserPwd(data) {
+    return await http.post("/admin/change-password", data);
+  }
+  async logout() {
+    return await http.post("/auth/logout");
   }
 }
 

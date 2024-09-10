@@ -1,7 +1,7 @@
 <script setup>
-import logo from '@images/logo.svg?raw'
-import authV1BottomShape from '@images/svg/auth-v1-bottom-shape.svg?url'
-import authV1TopShape from '@images/svg/auth-v1-top-shape.svg?url'
+// import logo from '@images/logo.svg?raw'
+// import authV1BottomShape from '@images/svg/auth-v1-bottom-shape.svg?url'
+// import authV1TopShape from '@images/svg/auth-v1-top-shape.svg?url'
 import UserDataService from '@/api/UserDataService';
 import { useRouter } from 'vue-router';
 

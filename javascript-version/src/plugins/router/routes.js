@@ -1,63 +1,71 @@
 export const routes = [
-  { path: '/', redirect: '/dashboard' },
+  { path: "/", redirect: "/dashboard" },
   {
-    path: '/',
-    component: () => import('@/layouts/default.vue'),
+    path: "/",
+    component: () => import("@/layouts/default.vue"),
     children: [
       {
-        path: 'dashboard',
-        component: () => import('@/pages/dashboard.vue'),
+        path: "dashboard",
+        component: () => import("@/pages/dashboard.vue"),
       },
       {
-        path: 'account-settings',
-        component: () => import('@/pages/account-settings.vue'),
+        path: "/user/profile",
+        component: () => import("@/views/pages/user/profile.vue"),
       },
       {
-        path: 'typography',
-        component: () => import('@/pages/typography.vue'),
+        path: "account-settings",
+        component: () => import("@/pages/account-settings.vue"),
       },
       {
-        path: 'icons',
-        component: () => import('@/pages/icons.vue'),
+        path: "typography",
+        component: () => import("@/pages/typography.vue"),
       },
       {
-        path: 'cards',
-        component: () => import('@/pages/cards.vue'),
+        path: "icons",
+        component: () => import("@/pages/icons.vue"),
       },
       {
-        path: 'tables',
-        component: () => import('@/pages/tables.vue'),
+        path: "cards",
+        component: () => import("@/pages/cards.vue"),
       },
       {
-        path: 'form-layouts',
-        component: () => import('@/pages/form-layouts.vue'),
+        path: "tables",
+        component: () => import("@/pages/tables.vue"),
+      },
+      {
+        path: "form-layouts",
+        component: () => import("@/pages/form-layouts.vue"),
+      },
+      {
+        path: "/user/gcon-user-manage",
+        component: () => import("@/views/pages/user/gcon-user-manage.vue"),
       },
     ],
   },
   {
-    path: '/',
-    component: () => import('@/layouts/blank.vue'),
+    path: "/",
+    component: () => import("@/layouts/blank.vue"),
     children: [
       {
-        path: 'login',
-        component: () => import('@/pages/login.vue'),
+        path: "login",
+        component: () => import("@/pages/login.vue"),
       },
       {
-        path: 'register',
-        component: () => import('@/pages/register.vue'),
+        path: "register",
+        component: () => import("@/pages/register.vue"),
       },
       {
-        path: 'findId',
-        component: () => import('@/pages/findId.vue'),
+        path: "findId",
+        component: () => import("@/pages/findId.vue"),
       },
       {
-        path: 'findPassword',
-        component: () => import('@/pages/findPassword.vue'),
+        path: "findPassword",
+        component: () => import("@/pages/findPassword.vue"),
       },
       {
-        path: '/:pathMatch(.*)*',
-        component: () => import('@/pages/[...error].vue'),
+        path: "/:pathMatch(.*)*",
+        component: () => import("@/pages/[...error].vue"),
       },
     ],
   },
-]
+];
