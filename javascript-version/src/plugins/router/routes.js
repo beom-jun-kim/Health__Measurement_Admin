@@ -47,6 +47,14 @@ export const routes = [
         component: () => import('@/pages/register.vue'),
       },
       {
+        path: 'findId',
+        component: () => import('@/pages/findId.vue'),
+      },
+      {
+        path: 'findPassword',
+        component: () => import('@/pages/findPassword.vue'),
+      },
+      {
         path: '/:pathMatch(.*)*',
         component: () => import('@/pages/[...error].vue'),
       },

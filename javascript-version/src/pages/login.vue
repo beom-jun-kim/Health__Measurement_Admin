@@ -51,7 +51,7 @@ const isPasswordVisible = ref(false)
       <VCard class="auth-card" max-width="460" :class="$vuetify.display.smAndUp ? 'pa-6' : 'pa-0'">
         <VCardText>
           <h2 class="mb-1 text-center">
-            회원가입
+            로그인
           </h2>
         </VCardText>
 
@@ -80,26 +80,26 @@ const isPasswordVisible = ref(false)
               <VCol cols="12">
                 <VTextField v-model="form.email" autofocus label="아이디" type="email" />
               </VCol>
-
               <VCol cols="12">
                 <VTextField v-model="form.password" label="비밀번호" :type="isPasswordVisible ? 'text' : 'password'"
                   :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
                   @click:append-inner="isPasswordVisible = !isPasswordVisible" />
-                  <p v-if="errorMessageCntBox">{{ errorMessageCnt }}</p>
-
+                <p v-if="errorMessageCntBox">{{ errorMessageCnt }}</p>
                 <div class="d-flex align-center justify-space-between flex-wrap my-6">
                   <VCheckbox v-model="form.remember" label="아이디 저장" />
-
-                  <a class="text-primary" href="javascript:void(0)">
-                    비밀번호를 잊으셨나요?
-                  </a>
+                  <div>
+                    <a class="text-primary" href="/findId">
+                      아이디 찾기 |
+                    </a>
+                    <a class="text-primary" href="/findPassword">
+                      비밀번호 찾기
+                    </a>
+                  </div>
                 </div>
-
                 <VBtn block type="submit">
                   Login
                 </VBtn>
               </VCol>
-
               <VCol cols="12" class="text-body-1 text-center">
                 <span class="d-inline-block">
                   계정이 없으신가요?
@@ -108,17 +108,6 @@ const isPasswordVisible = ref(false)
                   회원가입
                 </RouterLink>
               </VCol>
-
-              <!-- <VCol cols="12" class="d-flex align-center">
-                <VDivider />
-                <span class="mx-4 text-high-emphasis">or</span>
-                <VDivider />
-              </VCol>
-
-              auth providers
-              <VCol cols="12" class="text-center">
-                <AuthProvider />
-              </VCol> -->
             </VRow>
           </VForm>
         </VCardText>

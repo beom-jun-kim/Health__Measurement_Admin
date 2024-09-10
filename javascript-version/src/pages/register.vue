@@ -179,8 +179,8 @@ const handleSignUp = async () => {
                   <VTextField v-model="form.authCode" label="인증번호" required :disabled="isAuthCodeSent" />
                 </VCol>
 
-                <VCol cols="12" v-if="isAuthCodeSentVisible">
-                  <p>인증번호가 이메일로 전송되었습니다. 남은시간 {{ formatTime(timer) }}</p>
+                <VCol cols="12" class="py-0" v-if="isAuthCodeSentVisible">
+                  <p class="mb-0">인증번호가 이메일로 전송되었습니다. 남은시간 {{ formatTime(timer) }}</p>
                 </VCol>
 
                 <VCol cols="12" v-if="isAuthCodeSentVisible">
