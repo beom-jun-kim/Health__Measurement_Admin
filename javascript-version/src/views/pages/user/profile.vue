@@ -85,11 +85,11 @@ const isPasswordVisible = ref(false)
         <div>
             <VCard class="auth-card" :class="$vuetify.display.smAndUp ? 'pa-6' : 'pa-0'">
                 <VCardText>
-                    <h2 class="mb-1 text-center">
+                    <h2 class="mb-1">
                         내 정보 관리
                     </h2>
                 </VCardText>
-                <VCardText style="max-width: 500px; margin: 0 auto;">
+                <VCardText style="max-width: 500px;">
                     <VForm @submit.prevent="patchUserInfo">
                         <VRow>
                             <VCol cols="12">

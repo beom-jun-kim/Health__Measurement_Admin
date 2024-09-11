@@ -1,86 +1,197 @@
 <script setup>
-const desserts = [
-  {
-    dessert: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6,
-    carbs: 24,
-    protein: 4,
-  },
-  {
-    dessert: 'Ice cream sandwich',
-    calories: 237,
-    fat: 6,
-    carbs: 24,
-    protein: 4,
-  },
-  {
-    dessert: 'Eclair',
-    calories: 262,
-    fat: 6,
-    carbs: 24,
-    protein: 4,
-  },
-  {
-    dessert: 'Cupcake',
-    calories: 305,
-    fat: 6,
-    carbs: 24,
-    protein: 4,
-  },
-  {
-    dessert: 'Gingerbread',
-    calories: 356,
-    fat: 6,
-    carbs: 24,
-    protein: 4,
-  },
-]
+import GconUserManage from '@/api/GconUserManage';
+import { onMounted } from 'vue';
+
+const getAllUserArr = ref([])
+const pageUser = ref(0)
+const size = ref(10)
+const searchUser = ref('')
+const chkArr = ref([])
+const allSelected = ref('')
+const indexPage = ref(1)
+const searchUsername = ref('')
+
+const getAllUser = async () => {
+  try {
+    const response = await GconUserManage.getGconAllUser(pageUser.value, size.value, searchUser.value)
+    getAllUserArr.value = response.data;
+  } catch (error) {
+    console.log("유저 전체조회 실패", error);
+  }
+}
+
+const selectAll = () => {
+  if (allSelected.value) {
+    chkArr.value = getAllUserArr.value.content.map(user => user.userSid);
+  } else {
+    chkArr.value = [];
+  }
+};
+
+const toggleSelection = () => {
+  chkArr.value = [...chkArr.value];
+};
+
+const indexPageLoadAllUser = async (page) => {
+  indexPage.value = page;
+  pageUser.value = page - 1;
+  await getAllUser();
+}
+
+const statusSave = async () => {
+  if (confirm("저장하시겠습니까?")) {
+    try {
+      const data = getAllUserArr.value.content
+        .filter(user => chkArr.value.includes(user.userSid))
+        .map(user => ({
+          userSid: user.userSid,
+          active: user.active
+        }));
+      await GconUserManage.patchUserStatus(data)
+      alert("저장되었습니다");
+      await getAllUser();
+    } catch (error) {
+      console.log("유저 상태 저장 실패", error);
+    }
+  }
+}
+
+watch(searchUsername, async (newSearchValue) => {
+  pageUser.value = 0;
+  await userSearch(newSearchValue);
+});
+
+const userSearch = async (searchValue) => {
+  try {
+    const response = await GconUserManage.getGconAllUser(pageUser.value, size.value, searchValue);
+    getAllUserArr.value = response.data;
+    indexPage.value = 1;
+  } catch (error) {
+    console.log("검색 실패", error);
+  }
+};
+
+
+onMounted(async () => {
+  await getAllUser();
+})
+
 </script>
 
 <template>
-  <VTable>
-    <thead>
-      <tr>
-        <th class="text-uppercase">
-          Desserts (100g Servings)
-        </th>
-        <th>
-          calories
-        </th>
-        <th>
-          Fat(g)
-        </th>
-        <th>
-          Carbs(g)
-        </th>
-        <th>
-          protein(g)
-        </th>
-      </tr>
-    </thead>
+  <div class="position-relative">
+    <div class="d-flex align-center cursor-pointer ms-lg-n3" style="user-select: none;">
+      <span class="d-md-flex align-center text-disabled ms-5" style="width:300px;">
+        <VTextField placeholder="회원 이름 검색" v-model="searchUsername">
+          <IconBtn>
+            <VIcon icon="bx-search" />
+          </IconBtn>
+        </VTextField>
+      </span>
+    </div>
+    <VCardText class="text-right position-absolute" style="top: -80px; right: 0;">
+      <VBtn @click="statusSave">저장</VBtn>
+    </VCardText>
+    <VTable>
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">
+            <label>
+              <input type="checkbox" @change="selectAll" v-model="allSelected" style="cursor: pointer;" />
+            </label>
+          </th>
+          <th scope="col" class="text-center">번호</th>
+          <th scope="col" class="text-center">아이디</th>
+          <th scope="col" class="text-center">이름</th>
+          <th scope="col" class="text-center">가입날짜</th>
+          <th scope="col" class="text-center">탈퇴유무</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr
-        v-for="item in desserts"
-        :key="item.dessert"
-      >
-        <td>
-          {{ item.dessert }}
-        </td>
-        <td>
-          {{ item.calories }}
-        </td>
-        <td>
-          {{ item.fat }}
-        </td>
-        <td>
-          {{ item.carbs }}
-        </td>
-        <td>
-          {{ item.protein }}
-        </td>
-      </tr>
-    </tbody>
-  </VTable>
+      <tbody v-if="getAllUserArr.totalElements !== 0" class="text-center">
+        <tr v-for="(getAllUser, index) in getAllUserArr.content" :key="index">
+          <td>
+            <input style="cursor: pointer;" type="checkbox" v-model="chkArr" :value="getAllUser.userSid"
+              @change="toggleSelection" />
+          </td>
+          <td>
+            <RouterLink :to="`/user/gcon-user-detail/${getAllUser.userSid}`" class="detailMove">
+              {{ index + 1 }}
+            </RouterLink>
+          </td>
+          <td>
+            <RouterLink :to="`/user/gcon-user-detail/${getAllUser.userSid}`" class="detailMove">
+              {{ getAllUser.userId }}
+            </RouterLink>
+          </td>
+          <td>
+            <RouterLink :to="`/user/gcon-user-detail/${getAllUser.userSid}`" class="detailMove">
+              {{ getAllUser.name }}
+            </RouterLink>
+          </td>
+          <td>
+            <RouterLink :to="`/user/gcon-user-detail/${getAllUser.userSid}`" class="detailMove">
+              {{ getAllUser.createDate }}
+            </RouterLink>
+          </td>
+          <td>
+            <select v-model="getAllUser.active" class="select">
+              <option :value="true">사용중</option>
+              <option :value="false">탈퇴</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+      <tbody v-else>
+        <tr>
+          <td colspan="6">가입된 유저가 없습니다.</td>
+        </tr>
+      </tbody>
+    </VTable>
+    <div class="d-flex justify-center w-100 my-4">
+      <nav>
+        <ul class="d-flex">
+          <li class="border mx-1 text-center li" v-for="page in getAllUserArr.totalPages" :key="page"
+            :class="{ active: indexPage === page }">
+            <span @click.prevent="indexPageLoadAllUser(page)" style="display: block;">{{ page }}</span>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
 </template>
+
+<style scoped>
+li {
+  list-style: none;
+  width: 25px;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+li.active {
+  color: #fff;
+  background: #696CFF;
+  border: none;
+}
+
+select {
+  border: 1px solid rgba(34, 48, 62, 0.217);
+  padding: 0 10px;
+  width: 95px;
+  height: 40px;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800px' height='800px' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z' fill='%230F0F0F'/%3E%3C/svg%3E") no-repeat right 10px center;
+  background-size: 16px 16px;
+}
+
+.detailMove {
+  display: block;
+  height: 100%;
+  line-height: 49px;
+}
+</style>

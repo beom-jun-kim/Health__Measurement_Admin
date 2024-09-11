@@ -37,13 +37,17 @@ onMounted(() => {
         <!-- 👉 Search -->
         <div class="d-flex align-center cursor-pointer ms-lg-n3" style="user-select: none;">
           <!-- 👉 Search Trigger button -->
-          <IconBtn>
+          <!-- <IconBtn>
             <VIcon icon="bx-search" />
-          </IconBtn>
+          </IconBtn> -->
 
           <span class="d-none d-md-flex align-center text-disabled ms-2">
-            <span class="me-2">Search</span>
-            <span class="meta-key">&#8984;K</span>
+            <span class="me-2 d-flex">
+              <!-- <VIcon icon="bx-home-smile" class="mr-2"/>
+              <span>Home</span> -->
+            </span>
+            <!-- <span class="me-2">Search</span>
+            <span class="meta-key">&#8984;K</span> -->
           </span>
         </div>
 

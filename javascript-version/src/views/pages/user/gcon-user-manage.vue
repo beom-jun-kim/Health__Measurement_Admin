@@ -1,20 +1,21 @@
 <script setup>
 import DemoSimpleTableBasics from '@/views/pages/tables/DemoSimpleTableBasics.vue'
-import DemoSimpleTableDensity from '@/views/pages/tables/DemoSimpleTableDensity.vue'
-import DemoSimpleTableFixedHeader from '@/views/pages/tables/DemoSimpleTableFixedHeader.vue'
-import DemoSimpleTableHeight from '@/views/pages/tables/DemoSimpleTableHeight.vue'
-import DemoSimpleTableTheme from '@/views/pages/tables/DemoSimpleTableTheme.vue'
+// import DemoSimpleTableDensity from '@/views/pages/tables/DemoSimpleTableDensity.vue'
+// import DemoSimpleTableFixedHeader from '@/views/pages/tables/DemoSimpleTableFixedHeader.vue'
+// import DemoSimpleTableHeight from '@/views/pages/tables/DemoSimpleTableHeight.vue'
+// import DemoSimpleTableTheme from '@/views/pages/tables/DemoSimpleTableTheme.vue'
+
 </script>
 
 <template>
     <VRow>
         <VCol cols="12">
-            <VCard title="Basic">
+            <VCard title="GCON 회원 리스트">
                 <DemoSimpleTableBasics />
             </VCard>
         </VCol>
 
-        <VCol cols="12">
+        <!-- <VCol cols="12">
             <VCard title="Theme">
                 <VCardText>
                     use <code>theme</code> prop to switch table to the dark theme.
@@ -48,6 +49,6 @@ import DemoSimpleTableTheme from '@/views/pages/tables/DemoSimpleTableTheme.vue'
                 </VCardText>
                 <DemoSimpleTableFixedHeader />
             </VCard>
-        </VCol>
+        </VCol> -->
     </VRow>
 </template>

@@ -7,13 +7,12 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
 <template>
 
   <!-- 👉 home -->
-  <!-- <VerticalNavGroup :item="{
+  <!-- <VerticalNavLink :item="{
     title: 'home',
-    badgeContent: '5',
-    badgeClass: 'bg-error',
     icon: 'bx-home-smile',
+    to: '/dashboard',
   }">
-  </VerticalNavGroup> -->
+  </VerticalNavLink> -->
 
   <!-- 모니터링 -->
   <VerticalNavSectionTitle :item="{

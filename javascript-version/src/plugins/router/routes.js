@@ -40,6 +40,10 @@ export const routes = [
         path: "/user/gcon-user-manage",
         component: () => import("@/views/pages/user/gcon-user-manage.vue"),
       },
+      {
+        path: "/user/gcon-user-detail/:id",
+        component: () => import("@/views/pages/user/gocn-user-detail.vue"),
+      },
     ],
   },
   {

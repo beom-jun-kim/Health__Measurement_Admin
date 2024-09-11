@@ -9,6 +9,10 @@ body {
   min-block-size: 100%;
 }
 
+a {
+  color: inherit;
+}
+
 .layout-page-content {
   @include mixins.boxed-content(true);
 
