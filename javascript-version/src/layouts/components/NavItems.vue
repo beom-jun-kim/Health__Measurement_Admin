@@ -42,7 +42,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
   }">
     <VerticalNavLink :item="{
       title: 'GCON 관리',
-      to: '/user/ddd',
+      to: '/gcon-container',
     }" />
     <VerticalNavLink :item="{
       title: '스마트 신발 관리',

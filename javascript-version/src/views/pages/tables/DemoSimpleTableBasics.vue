@@ -89,7 +89,7 @@ onMounted(async () => {
         </VTextField>
       </span>
     </div>
-    <VCardText class="text-right position-absolute" style="top: -80px; right: 0;">
+    <VCardText class="text-right position-absolute" style="top: -20px; right: 0;">
       <VBtn @click="statusSave">저장</VBtn>
     </VCardText>
     <VTable>

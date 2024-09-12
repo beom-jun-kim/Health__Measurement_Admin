@@ -44,6 +44,19 @@ export const routes = [
         path: "/user/gcon-user-detail/:id",
         component: () => import("@/views/pages/user/gocn-user-detail.vue"),
       },
+      {
+        path: "/gcon-container",
+        component: () => import("@/views/pages/gcon-container/container.vue"),
+      },
+      {
+        path: "/gcon-container-add",
+        component: () => import("@/views/pages/gcon-container/gcon-container-add.vue"),
+      },
+      {
+        path: "/gcon-container/:id",
+        component: () =>
+          import("@/views/pages/gcon-container/gcon-container-edit.vue"),
+      },
     ],
   },
   {
