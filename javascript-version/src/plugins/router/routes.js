@@ -57,6 +57,11 @@ export const routes = [
         component: () =>
           import("@/views/pages/gcon-container/gcon-container-edit.vue"),
       },
+      {
+        path: "/smart-shoes-manage",
+        component: () =>
+          import("@/views/pages/gcon-container/smart-shoes-manage.vue"),
+      },
     ],
   },
   {

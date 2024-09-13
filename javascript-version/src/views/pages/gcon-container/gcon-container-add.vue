@@ -145,8 +145,8 @@ onMounted(async () => {
                                 @click="openPostcode" placeholder="주소검색" readonly />
 
                             <div class="mt-4" v-if="lat && long">
-                                <span>위도</span><VTextField class="my-2">{{ getGconInfoDetail.latitude }}</VTextField>
-                                <span>경도</span><VTextField class="my-2">{{ getGconInfoDetail.longitude }}</VTextField>
+                                <span>위도</span><VTextField class="my-2" readonly>{{ getGconInfoDetail.latitude }}</VTextField>
+                                <span>경도</span><VTextField class="my-2" readonly>{{ getGconInfoDetail.longitude }}</VTextField>
                             </div>
                         </VCol>
 

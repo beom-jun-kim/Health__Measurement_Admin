@@ -25,6 +25,15 @@ class GconContainer {
   async getLatAndLon(addr) {
     return await http.get(`/container/gw?address=${addr}`);
   }
+  async shoesManage(page, size) {
+    return await http.get(`/shoes?page=${page}&size=${size}`);
+  }
+  async gconSelect() {
+    return await http.get(`/container/select`);
+  }
+  async shoesPatch() {
+    return await http.patch(`/shoes`);
+  }
 }
 
 export default new GconContainer();
