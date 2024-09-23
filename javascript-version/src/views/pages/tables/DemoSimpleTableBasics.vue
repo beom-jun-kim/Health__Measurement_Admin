@@ -39,19 +39,23 @@ const indexPageLoadAllUser = async (page) => {
 }
 
 const statusSave = async () => {
-  if (confirm("저장하시겠습니까?")) {
-    try {
-      const data = getAllUserArr.value.content
-        .filter(user => chkArr.value.includes(user.userSid))
-        .map(user => ({
-          userSid: user.userSid,
-          active: user.active
-        }));
-      await GconUserManage.patchUserStatus(data)
-      alert("저장되었습니다");
-      await getAllUser();
-    } catch (error) {
-      console.log("유저 상태 저장 실패", error);
+  if (chkArr.value.length === 0) {
+    alert("수정하시고자 하는 유저를 체크하여 주세요")
+  } else {
+    if (confirm("저장하시겠습니까?")) {
+      try {
+        const data = getAllUserArr.value.content
+          .filter(user => chkArr.value.includes(user.userSid))
+          .map(user => ({
+            userSid: user.userSid,
+            active: user.active
+          }));
+        await GconUserManage.patchUserStatus(data)
+        alert("저장되었습니다");
+        await getAllUser();
+      } catch (error) {
+        console.log("유저 상태 저장 실패", error);
+      }
     }
   }
 }

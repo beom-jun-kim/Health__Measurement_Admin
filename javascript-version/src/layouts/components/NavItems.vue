@@ -50,11 +50,11 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
     }" />
     <VerticalNavLink :item="{
       title: '카메라 관리',
-      to: '/user/ddd',
+      to: '/camera-manage',
     }" />
     <VerticalNavLink :item="{
       title: '검지매트 관리',
-      to: '/user/ddd',
+      to: '/mat-manage',
     }" />
     <VerticalNavLink :item="{
       title: '배회감지 장비 관리',

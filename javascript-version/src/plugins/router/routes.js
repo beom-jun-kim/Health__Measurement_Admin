@@ -62,6 +62,16 @@ export const routes = [
         component: () =>
           import("@/views/pages/gcon-container/smart-shoes-manage.vue"),
       },
+      {
+        path: "/camera-manage",
+        component: () =>
+          import("@/views/pages/gcon-container/camera-manage.vue"),
+      },
+      {
+        path: "/mat-manage",
+        component: () =>
+          import("@/views/pages/gcon-container/mat-manage.vue"),
+      },
     ],
   },
   {

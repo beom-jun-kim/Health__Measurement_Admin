@@ -13,7 +13,6 @@ const getCityes = async () => {
     try {
         const response = await GconContainer.getCityes()
         getCityList.value = response.data;
-        console.log("getCityList.value", getCityList.value);
         if (getCityList.value.length > 0) {
             selectedCityCode.value = getCityList.value[0].code;
             await getGconList(selectedCityCode.value);
@@ -97,33 +96,33 @@ onMounted(async () => {
                         <tbody v-if="getGconDate.totalElements !== 0" class="text-center">
                             <tr v-for="(gcon, index) in getGconDate.content" :key="index">
                                 <td>
-                                    <RouterLink :to="`/gcon-container/${gcon.id}`" class="detailMove">
+                                    <RouterLink :to="`/gcon-container/${gcon.containerSid}`" class="detailMove">
                                         {{ index + 1 }}
                                     </RouterLink>
                                 </td>
                                 <td>
-                                    <RouterLink :to="`/gcon-container/${gcon.id}`" class="detailMove">
+                                    <RouterLink :to="`/gcon-container/${gcon.containerSid}`" class="detailMove">
                                         {{ gcon.containerName }}
                                     </RouterLink>
                                 </td>
                                 <td>
-                                    <RouterLink :to="`/gcon-container/${gcon.id}`" class="detailMove">
+                                    <RouterLink :to="`/gcon-container/${gcon.containerSid}`" class="detailMove">
                                         {{ gcon.rdAdr }}
                                     </RouterLink>
                                 </td>
                                 <td>
-                                    <RouterLink :to="`/gcon-container/${gcon.id}`" class="detailMove">
+                                    <RouterLink :to="`/gcon-container/${gcon.containerSid}`" class="detailMove">
                                         {{ gcon.telno }}
                                     </RouterLink>
                                 </td>
                                 <td>
-                                    <RouterLink :to="`/gcon-container/${gcon.id}`" class="detailMove">
+                                    <RouterLink :to="`/gcon-container/${gcon.containerSid}`" class="detailMove">
                                         {{ gcon.status === "active" ? "운영중" : gcon.status === "inactive" ? "납품 진행중" :
                                             gcon.status === "pending" ? "예약" : null }}
                                     </RouterLink>
                                 </td>
                                 <td>
-                                    <RouterLink :to="`/gcon-container/${gcon.id}`" class="detailMove">
+                                    <RouterLink :to="`/gcon-container/${gcon.containerSid}`" class="detailMove">
                                         {{ gcon.remark === null ? "-" : gcon.remark }}
                                     </RouterLink>
                                 </td>

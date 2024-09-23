@@ -1,16 +1,15 @@
 <script setup>
+import Mat from '@/api/Mat';
 import GconContainer from '@/api/GconContainer';
 import { onMounted } from 'vue';
 
 const smartShoesPostObj = ref({
+    matName: "",
     containerSid: "",
-    shoesName: "",
-    leftSensorId: "",
-    rightSensorId: "",
     remark: "",
 })
 const smartShoesEquArr = ref([])
-const pageSmartShoes = ref(0)
+const pageCamera = ref(0)
 const size = ref(10)
 const chkArr = ref([])
 const allSelected = ref('')
@@ -19,11 +18,11 @@ const gconSelectList = ref([])
 
 const conList = async () => {
     try {
-        const response = await GconContainer.shoesManage(pageSmartShoes.value, size.value)
+        const response = await Mat.getMat(pageCamera.value, size.value)
         smartShoesEquArr.value = response.data;
         await loadGconSelect();
     } catch (error) {
-        console.log("스마트신발 관리 조회 실패", error);
+        console.log("검지매트 조회 실패", error);
     }
 }
 
@@ -38,7 +37,7 @@ const loadGconSelect = async () => {
 
 const selectAll = () => {
     if (allSelected.value) {
-        chkArr.value = smartShoesEquArr.value.content.map(user => user.shoesSid);
+        chkArr.value = smartShoesEquArr.value.content.map(user => user.matSid);
     } else {
         chkArr.value = [];
     }
@@ -50,31 +49,29 @@ const toggleSelection = () => {
 
 const indexPageLoadAllUser = async (page) => {
     indexPage.value = page;
-    pageSmartShoes.value = page - 1;
+    pageCamera.value = page - 1;
     await conList();
 }
 
 const smartShoesLocSave = async () => {
     if (chkArr.value.length === 0) {
-        alert("수정하시고자 하는 신발을 체크하여 주세요")
+        alert("수정하시고자 하는 검지매트를 체크하여 주세요")
     } else {
         if (confirm("수정하시겠습니까?")) {
             try {
                 const data = smartShoesEquArr.value.content
-                    .filter(user => chkArr.value.includes(user.shoesSid))
+                    .filter(user => chkArr.value.includes(user.matSid))
                     .map(user => ({
-                        shoesSid: user.shoesSid,
-                        shoesName: user.shoesName,
-                        leftSensorId: user.leftSensorId,
-                        rightSensorId: user.rightSensorId,
-                        containerSid: user.containerSid,
+                        matSid: user.matSid,
+                        matName: user.matName,
                         remark: user.remark,
+                        containerSid: user.containerSid,
                     }));
-                await GconContainer.shoesPatch(data)
+                await Mat.patchMat(data)
                 alert("수정되었습니다");
                 await conList();
             } catch (error) {
-                console.log("신발 상태 수정 실패", error);
+                console.log("검지매트 저장 실패", error);
             }
         }
     }
@@ -82,43 +79,40 @@ const smartShoesLocSave = async () => {
 
 const smartShoesLocDel = async () => {
     if (chkArr.value.length === 0) {
-        alert("삭제하시고자 하는 신발을 체크하여 주세요")
+        alert("삭제하시고자 하는 검지매트를 체크하여 주세요")
     } else {
         if (confirm("삭제하시겠습니까?")) {
             try {
                 const data = smartShoesEquArr.value.content
-                    .filter(user => chkArr.value.includes(user.shoesSid))
-                    .map(user => user.shoesSid)
+                    .filter(user => chkArr.value.includes(user.matSid))
+                    .map(user => user.matSid)
                     .join(',');
-                console.log("1", data)
-                await GconContainer.shoesDel(data)
+                await Mat.delMat(data)
                 alert("삭제되었습니다");
                 await conList();
             } catch (error) {
-                console.log("신발 삭제 실패", error);
+                console.log("검지매트 삭제 실패", error);
             }
         }
     }
 }
 
 const smartShoesAdd = async () => {
-    if (smartShoesPostObj.value.shoesName === '') {
-        alert("신발명을 작성하여주세요")
+    if (smartShoesPostObj.value.matName === '') {
+        alert("검지매트명을 작성하여주세요")
     } else {
         if (confirm("추가하시겠습니까?")) {
             try {
                 const data = {
-                    shoesName: smartShoesPostObj.value.shoesName,
-                    leftSensorId: smartShoesPostObj.value.leftSensorId,
-                    rightSensorId: smartShoesPostObj.value.rightSensorId,
+                    matName: smartShoesPostObj.value.matName,
                     containerSid: smartShoesPostObj.value.containerSid,
                     remark: smartShoesPostObj.value.remark,
                 }
-                await GconContainer.shoesPost(data)
+                await Mat.postMat(data)
                 alert("추가되었습니다");
                 await conList();
             } catch (error) {
-                console.log("신발 추가 실패", error);
+                console.log("검지매트 추가 실패", error);
             }
         }
     }
@@ -133,7 +127,7 @@ onMounted(async () => {
 
 <template>
     <div>
-        <VCard title="스마트 신발 관리" class="position-relative">
+        <VCard title="검지매트 관리" class="position-relative">
             <VBtn class="text-right position-absolute" style="top: 20px; right: 100px;" @click="smartShoesLocSave">
                 수정
             </VBtn>
@@ -150,9 +144,7 @@ onMounted(async () => {
                             </label>
                         </th>
                         <th scope="col" class="text-center">번호</th>
-                        <th scope="col" class="text-center">스마트 신발명</th>
-                        <th scope="col" class="text-center">왼쪽 센서 ID</th>
-                        <th scope="col" class="text-center">오른쪽 센서 ID</th>
+                        <th scope="col" class="text-center">검지매트명</th>
                         <th scope="col" class="text-center">배치</th>
                         <th scope="col" class="text-center">비고</th>
                     </tr>
@@ -161,20 +153,14 @@ onMounted(async () => {
                 <tbody v-if="smartShoesEquArr.totalElements !== 0" class="text-center">
                     <tr v-for="(conList, index) in smartShoesEquArr.content" :key="index">
                         <td>
-                            <input style="cursor: pointer;" type="checkbox" v-model="chkArr" :value="conList.shoesSid"
+                            <input style="cursor: pointer;" type="checkbox" v-model="chkArr" :value="conList.matSid"
                                 @change="toggleSelection" />
                         </td>
                         <td>
                             {{ index + 1 }}
                         </td>
                         <td>
-                            {{ conList.shoesName }}
-                        </td>
-                        <td>
-                            {{ conList.leftSensorId }}
-                        </td>
-                        <td>
-                            {{ conList.rightSensorId }}
+                            {{ conList.matName }}
                         </td>
                         <td>
                             <select v-model="conList.containerSid" class="select">
@@ -189,7 +175,7 @@ onMounted(async () => {
                 </tbody>
                 <tbody v-else>
                     <tr>
-                        <td colspan="7">투입된 장비가 없습니다</td>
+                        <td colspan="5">투입된 장비가 없습니다</td>
                     </tr>
                 </tbody>
             </VTable>
@@ -204,28 +190,16 @@ onMounted(async () => {
                 </nav>
             </div>
         </VCard>
-        <VCard title="스마트 신발 추가하기" class="position-relative mt-4">
+        <VCard title="검지매트 추가하기" class="position-relative mt-4">
             <VCardText class="text-right position-absolute" style="top: 20px; right: 0;">
                 <VBtn @click="smartShoesAdd">추가</VBtn>
             </VCardText>
             <VCardText>
                 <VRow>
-                    <VCol cols="4">
-                        <div class="my-2">스마트 신발명</div>
-                        <VTextField v-model="smartShoesPostObj.shoesName" :value="smartShoesPostObj.shoesName" autofocus
-                            placeholder="예) Shoes1" />
-                    </VCol>
-
-                    <VCol cols="4">
-                        <div class="my-2">왼쪽 센서 ID</div>
-                        <VTextField v-model="smartShoesPostObj.leftSensorId" :value="smartShoesPostObj.leftSensorId"
-                            autofocus placeholder="예) 00:1A:2B:3C:4D:5E" />
-                    </VCol>
-
-                    <VCol cols="4">
-                        <div class="my-2">오른쪽 센서 ID</div>
-                        <VTextField v-model="smartShoesPostObj.rightSensorId" :value="smartShoesPostObj.rightSensorId"
-                            autofocus placeholder="예) 00:1A:2B:3C:4D:5E" />
+                    <VCol cols="6">
+                        <div class="my-2">검지매트명</div>
+                        <VTextField v-model="smartShoesPostObj.matName" :value="smartShoesPostObj.matName" autofocus
+                            placeholder="예) Camera1" />
                     </VCol>
 
                     <VCol cols="6">
