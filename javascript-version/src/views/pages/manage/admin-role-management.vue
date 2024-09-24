@@ -101,7 +101,7 @@ onMounted(async () => {
     <VRow>
         <VCol>
             <VCard title="관리자 권한 리스트">
-                <VTable>
+                <VTable class="px-6">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">번호</th>
