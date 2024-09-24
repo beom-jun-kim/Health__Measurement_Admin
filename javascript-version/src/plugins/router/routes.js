@@ -50,7 +50,8 @@ export const routes = [
       },
       {
         path: "/gcon-container-add",
-        component: () => import("@/views/pages/gcon-container/gcon-container-add.vue"),
+        component: () =>
+          import("@/views/pages/gcon-container/gcon-container-add.vue"),
       },
       {
         path: "/gcon-container/:id",
@@ -69,8 +70,15 @@ export const routes = [
       },
       {
         path: "/mat-manage",
-        component: () =>
-          import("@/views/pages/gcon-container/mat-manage.vue"),
+        component: () => import("@/views/pages/gcon-container/mat-manage.vue"),
+      },
+      {
+        path: "/manage/admin-management",
+        component: () => import("@/views/pages/manage/admin-management.vue"),
+      },
+      {
+        path: "/manage/admin-role-management",
+        component: () => import("@/views/pages/manage/admin-role-management.vue"),
       },
     ],
   },

@@ -121,11 +121,11 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
   }">
     <VerticalNavLink :item="{
       title: '관리자 관리',
-      to: '/user/ddd',
+      to: '/manage/admin-management',
     }" />
     <VerticalNavLink :item="{
       title: '관리자 권한 관리',
-      to: '/user/ddd',
+      to: '/manage/admin-role-management',
     }" />
     <VerticalNavLink :item="{
       title: '관리자 권한 메뉴 관리',
