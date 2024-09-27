@@ -124,8 +124,6 @@ const saveAdminRoleMenu = async () => {
                 roleSid: currentRoleSid,
                 nodeList: nodeList
             };
-
-            console.log("data", data);
             await Manage.patchAdminRoleMenu(data);
             alert("수정되었습니다");
         } catch (e) {
@@ -164,7 +162,7 @@ onMounted(async () => {
             </VCard>
         </VCol>
         <VCol cols="10">
-            <VCard title="GCON 리스트">
+            <VCard title="권한 설정">
                 <div class="position-relative">
                     <VBtn class="text-right position-absolute" style="top: -58px; right: 30px;"
                         @click="saveAdminRoleMenu">
