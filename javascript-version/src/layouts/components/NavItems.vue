@@ -115,7 +115,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
   }" />
   <VerticalNavGroup :item="{
     title: '관리자 관리',
-    badgeContent: '4',
+    badgeContent: '3',
     badgeClass: 'bg-error',
     icon: 'bx-atom',
   }">
@@ -129,12 +129,12 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
     }" />
     <VerticalNavLink :item="{
       title: '관리자 권한 메뉴 관리',
-      to: '/user/ddd',
+      to: '/manage/admin-menu-management',
     }" />
-    <VerticalNavLink :item="{
+    <!-- <VerticalNavLink :item="{
       title: '관리자 로그 관리',
       to: '/user/ddd',
-    }" />
+    }" /> -->
   </VerticalNavGroup>
 
 

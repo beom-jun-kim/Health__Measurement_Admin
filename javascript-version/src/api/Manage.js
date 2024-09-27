@@ -29,6 +29,12 @@ class Manage {
       `/admin/by-role?roleSid=${id}&page=${page}&size=${size}`
     );
   }
+  async getAdminRoleMenu(id) {
+    return await http.get(`/menu/role?roleSid=${id}`);
+  }
+  async patchAdminRoleMenu(data) {
+    return await http.patch("/menu", data);
+  }
 }
 
 export default new Manage();

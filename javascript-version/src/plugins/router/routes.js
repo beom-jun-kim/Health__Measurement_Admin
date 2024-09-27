@@ -80,6 +80,10 @@ export const routes = [
         path: "/manage/admin-role-management",
         component: () => import("@/views/pages/manage/admin-role-management.vue"),
       },
+      {
+        path: "/manage/admin-menu-management",
+        component: () => import("@/views/pages/manage/admin-menu-management.vue"),
+      },
     ],
   },
   {
