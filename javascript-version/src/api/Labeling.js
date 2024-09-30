@@ -10,6 +10,9 @@ class Labeling {
   async patchLabelingSelect(data) {
     return await http.patch("/labeling", data);
   }
+  async delLabelingSelect(id) {    
+    return await http.delete(`/labeling?id=${id}`);
+  }
 }
 
 export default new Labeling();

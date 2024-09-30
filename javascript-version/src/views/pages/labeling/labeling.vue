@@ -38,7 +38,7 @@ const saveLabelingDate = async () => {
     if (chkArr.value.length === 0) {
         alert("수정하시고자 하는 라벨링을 체크하여 주세요")
     } else {
-        if (confirm("저장하시겠습니까?")) {
+        if (confirm("수정하시겠습니까?")) {
             try {
                 const data = labelingImgDate.value.content
                     .filter(label => chkArr.value.includes(label.id))
@@ -53,10 +53,30 @@ const saveLabelingDate = async () => {
                         accessories: label.accessories,
                     }))
                 await Labeling.patchLabelingSelect(data)
-                alert("저장되었습니다")
+                alert("수정되었습니다")
                 await loadLabelingImg()
             } catch (e) {
                 console.log("저장 실패", e)
+            }
+        }
+    }
+}
+
+const delLabelingDate = async () => {
+    if (chkArr.value.length === 0) {
+        alert("삭제하시고자 하는 라벨링을 체크하여 주세요")
+    } else {
+        if (confirm("삭제하시겠습니까?")) {
+            try {
+                const data = labelingImgDate.value.content
+                    .filter(label => chkArr.value.includes(label.id))
+                    .map(label => label.id)
+                    .join(',')                
+                await Labeling.delLabelingSelect(data)
+                alert("삭제되었습니다")
+                await loadLabelingImg()
+            } catch (e) {
+                console.log("삭제 실패", e)
             }
         }
     }
@@ -75,8 +95,11 @@ onMounted(async () => {
 
 <template>
     <VCard title="사물인식 라벨링" class="position-relative">
-        <VBtn class="text-right position-absolute" style="top: 20px; right: 30px;" @click="saveLabelingDate">
+        <VBtn class="text-right position-absolute" style="top: 20px; right: 110px;" @click="saveLabelingDate">
             저장
+        </VBtn>
+        <VBtn class="text-right position-absolute" style="top: 20px; right: 30px;" @click="delLabelingDate">
+            삭제
         </VBtn>
         <div v-if="labelingImgDate.totalElements !== 0" class="px-6 gap-5 labelingImgDateContentWrap">
             <div v-for="(labelingImg, index) in labelingImgDate.content" :key="index" class="labelingImgDateContent">
