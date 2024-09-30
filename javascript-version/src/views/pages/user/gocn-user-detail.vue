@@ -11,7 +11,7 @@ const loadUserDetail = async (id) => {
     try {
         const response = await GconUserManage.getGconUserDetail(id)
         getGconUserDetail.value = response.data;
-        console.log("1234", getGconUserDetail.value)
+        console.log("getGconUserDetail.value",getGconUserDetail.value)
     } catch (error) {
         console.log("유저 전체조회 실패", error);
     }
@@ -62,45 +62,48 @@ onMounted(async () => {
                                     <div class="chk-box" :class="{ 'active-tab': getGconUserDetail.general === true }">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px"
                                             viewBox="0 0 24 24" fill="none" class="icon">
-                                            <path class="path":class="{ 'active-path': getGconUserDetail.general === true }"
+                                            <path class="path"
+                                                :class="{ 'active-path': getGconUserDetail.general === true }"
                                                 d="M9 12L10.5 13.5V13.5C10.7761 13.7761 11.2239 13.7761 11.5 13.5V13.5L15 10"
                                                 stroke="#696CFF" stroke-width="2" stroke-linecap="round"
                                                 stroke-linejoin="round" />
                                         </svg>
                                     </div>
-                                    <div :class="{ 'active-tab': getGconUserDetail.general === true }">
+                                    <span>
                                         일반로그인
-                                    </div>
+                                    </span>
                                 </div>
-    
+
                                 <div class="d-flex align-center sns-login">
                                     <div class="chk-box" :class="{ 'active-tab': getGconUserDetail.naverId !== null }">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px"
                                             viewBox="0 0 24 24" fill="none" class="icon">
-                                            <path class="path":class="{ 'active-path': getGconUserDetail.naverId === true }"
+                                            <path class="path"
+                                                :class="{ 'active-path': getGconUserDetail.naverId !== null }"
                                                 d="M9 12L10.5 13.5V13.5C10.7761 13.7761 11.2239 13.7761 11.5 13.5V13.5L15 10"
                                                 stroke="#696CFF" stroke-width="2" stroke-linecap="round"
                                                 stroke-linejoin="round" />
                                         </svg>
                                     </div>
-                                    <div :class="{ 'active-tab': getGconUserDetail.naverId !== null }">
+                                    <span>
                                         네이버 로그인
-                                    </div>
+                                    </span>
                                 </div>
-    
+
                                 <div class="d-flex align-center sns-login">
                                     <div class="chk-box" :class="{ 'active-tab': getGconUserDetail.kakaoId !== null }">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px"
                                             viewBox="0 0 24 24" fill="none" class="icon">
-                                            <path class="path":class="{ 'active-path': getGconUserDetail.kakaoId !== null }"
+                                            <path class="path"
+                                                :class="{ 'active-path': getGconUserDetail.kakaoId !== null }"
                                                 d="M9 12L10.5 13.5V13.5C10.7761 13.7761 11.2239 13.7761 11.5 13.5V13.5L15 10"
                                                 stroke="#696CFF" stroke-width="2" stroke-linecap="round"
                                                 stroke-linejoin="round" />
                                         </svg>
                                     </div>
-                                    <div :class="{ 'active-tab': getGconUserDetail.kakaoId !== null }">
+                                    <span>
                                         카카오 로그인
-                                    </div>
+                                    </span>
                                 </div>
                             </div>
                         </VCol>
@@ -142,6 +145,10 @@ onMounted(async () => {
 
 .path {
     stroke: rgba(34, 48, 62, 0.217);
+}
+
+.path.active-path {
+    stroke: #696CFF;
 }
 
 .chk-box.active-tab {

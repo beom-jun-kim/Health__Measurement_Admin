@@ -78,15 +78,27 @@ export const routes = [
       },
       {
         path: "/manage/admin-role-management",
-        component: () => import("@/views/pages/manage/admin-role-management.vue"),
+        component: () =>
+          import("@/views/pages/manage/admin-role-management.vue"),
       },
       {
         path: "/manage/admin-menu-management",
-        component: () => import("@/views/pages/manage/admin-menu-management.vue"),
+        component: () =>
+          import("@/views/pages/manage/admin-menu-management.vue"),
       },
       {
         path: "/labeling",
         component: () => import("@/views/pages/labeling/labeling.vue"),
+      },
+      {
+        path: "/cust-sup-mana",
+        component: () =>
+          import("@/views/pages/cust-sup-mana/customer-support-management.vue"),
+      },
+      {
+        path: "/cust-sup-mana/:id",
+        component: () =>
+          import("@/views/pages/cust-sup-mana/cust-sup-mana-edit.vue"),
       },
     ],
   },

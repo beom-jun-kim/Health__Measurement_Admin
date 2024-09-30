@@ -91,9 +91,7 @@ const pwdReset = async () => {
                     password: pwdChan.value.password,
                     phoneNumber: form.value.phoneNumber,
                 }
-                console.log("1234234", data);
-                const response = await UserDataService.resetPwd(data);
-                console.log("response", response);
+                await UserDataService.resetPwd(data);
                 alert("비밀번호가 변경되었습니다")
                 router.push("/login");
             } catch (error) {

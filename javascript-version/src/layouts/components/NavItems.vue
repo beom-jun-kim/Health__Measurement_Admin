@@ -150,7 +150,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
   }">
     <VerticalNavLink :item="{
       title: '개인정보처리방침 관리',
-      to: '/user/ddd',
+      to: '/cust-sup-mana',
     }" />
     <VerticalNavLink :item="{
       title: '오픈소스 라이센스 관리',
