@@ -84,6 +84,10 @@ export const routes = [
         path: "/manage/admin-menu-management",
         component: () => import("@/views/pages/manage/admin-menu-management.vue"),
       },
+      {
+        path: "/labeling",
+        component: () => import("@/views/pages/labeling/labeling.vue"),
+      },
     ],
   },
   {

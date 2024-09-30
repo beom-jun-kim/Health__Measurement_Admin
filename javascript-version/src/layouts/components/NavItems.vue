@@ -75,7 +75,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
   }">
     <VerticalNavLink :item="{
       title: '사물인식 라벨링',
-      to: '/user/ddd',
+      to: '/labeling',
     }" />
   </VerticalNavGroup>
 

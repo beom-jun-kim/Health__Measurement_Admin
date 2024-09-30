@@ -65,4 +65,7 @@ export default defineConfig({
       './src/**/*.vue',
     ],
   },
+  server: {
+    port: 5174,
+  },
 })
