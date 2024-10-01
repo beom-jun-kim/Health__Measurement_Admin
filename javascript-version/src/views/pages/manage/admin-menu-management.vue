@@ -168,6 +168,8 @@ onMounted(async () => {
                         @click="saveAdminRoleMenu">
                         저장
                     </VBtn>
+                    <p class="ps-4 mb-0">※ <b>관리자 계정에 노출</b>시키고자 하는 <b>메뉴를 선택</b>하여 주세요</p>
+                    <p class="ps-4">※ 상위 메뉴를 선택하지 않고 하위메뉴만 선택시 해당 메뉴는 <b>노출되지 않습니다</b></p>
                     <VTable>
                         <thead>
                             <tr>
@@ -275,11 +277,12 @@ onMounted(async () => {
     justify-content: center;
     list-style: none;
     white-space: nowrap;
+    position: relative;
 }
 
 .subMenuMenuNameChkBox {
     position: absolute;
-    left: 20px;
+    left: 0;
 }
 
 select {
