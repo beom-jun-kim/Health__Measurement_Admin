@@ -154,11 +154,11 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
     }" />
     <VerticalNavLink :item="{
       title: '오픈소스 라이센스 관리',
-      to: '/user/ddd',
+      to: '/open-source',
     }" />
     <VerticalNavLink :item="{
       title: '서비스 이용약관 관리',
-      to: '/user/ddd',
+      to: '/terms-of-use',
     }" />
   </VerticalNavGroup>
 

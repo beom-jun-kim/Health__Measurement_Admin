@@ -10,14 +10,14 @@ const allSelected = ref('')
 const indexPage = ref(1)
 const startDay = ref('')
 const endDay = ref('')
-const category = ref('PRIVACY_POLICY')
+const category = ref('TERMS_OF_SERVICE')
 
 const conList = async () => {
     try {
         const response = await CustSupMana.getCustSupMana(category.value, startDay.value, endDay.value, pageSmartShoes.value, size.value)
         smartShoesEquArr.value = response.data;
     } catch (error) {
-        console.log("개인정보처리방침 관리 조회 실패", error);
+        console.log("서비스 이용약관 관리 조회 실패", error);
     }
 }
 
@@ -26,7 +26,7 @@ const searchDate = async () => {
         const response = await CustSupMana.getCustSupMana(category.value, startDay.value, endDay.value, pageSmartShoes.value, size.value)
         smartShoesEquArr.value = response.data;
     } catch (error) {
-        console.log("개인정보처리방침 관리 조회 실패", error);
+        console.log("서비스 이용약관 관리 조회 실패", error);
     }
 }
 
@@ -56,10 +56,10 @@ onMounted(async () => {
 
 <template>
     <div>
-        <VCard title="개인정보처리방침 리스트" class="position-relative">
+        <VCard title="서비스 이용약관 리스트" class="position-relative">
             <div class="px-4">
                 <VBtn class="text-right position-absolute" style="top: 20px; right: 20px;" @click="smartShoesLocDel">
-                    <RouterLink to="/cust-sup-mana/add">추가</RouterLink>
+                    <RouterLink to="/terms-of-use/add">추가</RouterLink>
                 </VBtn>
                 <div class="input_date_box align-center d-flex gap-2" style="width: 500px;">
                     <VTextField v-model="startDay" type="date" />
@@ -92,27 +92,27 @@ onMounted(async () => {
                                     :value="conList.shoesSid" @change="toggleSelection" />
                             </td>
                             <td>
-                                <RouterLink :to="`/cust-sup-mana/${conList.boardSid}`" class="detailMove">
+                                <RouterLink :to="`/terms-of-use/${conList.boardSid}`" class="detailMove">
                                     {{ index + 1 }}
                                 </RouterLink>
                             </td>
                             <td>
-                                <RouterLink :to="`/cust-sup-mana/${conList.boardSid}`" class="detailMove">
+                                <RouterLink :to="`/terms-of-use/${conList.boardSid}`" class="detailMove">
                                     {{ conList.title }}
                                 </RouterLink>
                             </td>
                             <td>
-                                <RouterLink :to="`/cust-sup-mana/${conList.boardSid}`" class="detailMove">
+                                <RouterLink :to="`/terms-of-use/${conList.boardSid}`" class="detailMove">
                                     {{ conList.status === false ? "대기" : "게시중" }}
                                 </RouterLink>
                             </td>
                             <td>
-                                <RouterLink :to="`/cust-sup-mana/${conList.boardSid}`" class="detailMove">
+                                <RouterLink :to="`/terms-of-use/${conList.boardSid}`" class="detailMove">
                                     {{ conList.createDate }}
                                 </RouterLink>
                             </td>
                             <td>
-                                <RouterLink :to="`/cust-sup-mana/${conList.boardSid}`" class="detailMove">
+                                <RouterLink :to="`/terms-of-use/${conList.boardSid}`" class="detailMove">
                                     {{ conList.updateDate }}
                                 </RouterLink>
                             </td>

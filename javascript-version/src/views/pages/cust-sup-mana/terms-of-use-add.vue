@@ -8,7 +8,7 @@ const getGconInfoDetail = ref({
     postStatus:'',
     content:'',
 })
-const category = ref('PRIVACY_POLICY')
+const category = ref('TERMS_OF_SERVICE')
 
 const gconDetailSave = async () => {
     if (confirm("저장하시겠습니까?")) {
@@ -21,9 +21,9 @@ const gconDetailSave = async () => {
             }
             await CustSupMana.postCustSupManaDetail(data)
             alert("저장되었습니다");
-            router.push("/cust-sup-mana");
+            router.push("/terms-of-use");
         } catch (error) {
-            console.log("개인정보처리방침 상세 정보 수정 실패", error);
+            console.log("서비스 이용약관 상세 정보 수정 실패", error);
         }
     }
 }
@@ -35,7 +35,7 @@ const gconDetailSave = async () => {
             <VCard class="auth-card" :class="$vuetify.display.smAndUp ? 'pa-6' : 'pa-0'">
                 <VCardText>
                     <h2 class="mb-1">
-                        개인정보처리방침 등록
+                        서비스 이용약관 등록
                     </h2>
                 </VCardText>
                 <VCardText class="text-right position-absolute" style="top: 40px; right: 20px;">

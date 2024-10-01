@@ -105,6 +105,31 @@ export const routes = [
         component: () =>
           import("@/views/pages/cust-sup-mana/cust-sup-mana-edit.vue"),
       },
+      {
+        path: "/open-source",
+        component: () => import("@/views/pages/cust-sup-mana/open-source.vue"),
+      },
+      {
+        path: "/open-source/add",
+        component: () => import("@/views/pages/cust-sup-mana/open-source-add.vue"),
+      },
+      {
+        path: "/open-source/:id",
+        component: () =>
+          import("@/views/pages/cust-sup-mana/open-source-edit.vue"),
+      },
+      {
+        path: "/terms-of-use",
+        component: () => import("@/views/pages/cust-sup-mana/terms-of-use.vue"),
+      },
+      {
+        path: "/terms-of-use/add",
+        component: () => import("@/views/pages/cust-sup-mana/terms-of-use-add.vue"),
+      },
+      {
+        path: "/terms-of-use/:id",
+        component: () => import("@/views/pages/cust-sup-mana/terms-of-use-edit.vue"),
+      },
     ],
   },
   {
