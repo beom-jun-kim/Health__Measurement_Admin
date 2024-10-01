@@ -13,31 +13,24 @@ const loadUserDetail = async (id) => {
     try {
         const response = await CustSupMana.getCustSupManaDetail(id)
         getGconInfoDetail.value = response.data;
-        console.log("getGconInfoDetail.value", getGconInfoDetail.value);
     } catch (error) {
         console.log("게시글 상세 조회 실패", error);
     }
 }
 
-const gconDetailSave = async (code) => {
+const gconDetailSave = async (id) => {
     if (confirm("저장하시겠습니까?")) {
         try {
             const data = {
-                id: route.params.id,
-                code,
-                containerName: getGconInfoDetail.value.containerName,
-                latitude: getGconInfoDetail.value.latitude,
-                longitude: getGconInfoDetail.value.longitude,
-                telno: getGconInfoDetail.value.telno,
-                rdAdr: getGconInfoDetail.value.rdAdr,
-                remark: getGconInfoDetail.value.remark,
-                status: getGconInfoDetail.value.status
+                boardSid: id,
+                title: getGconInfoDetail.value.title,
+                status: getGconInfoDetail.value.status,
+                content: getGconInfoDetail.value.content,
             }
-            console.log("55555", data);
-            await CustSupMana.patchGconDetail(data)
+            await CustSupMana.patchCustSupManaDetail(data)
             alert("저장되었습니다");
         } catch (error) {
-            console.log("지콘 상세 정보 수정 실패", error);
+            console.log("개인정보처리방침 상세 정보 수정 실패", error);
         }
     }
 }
@@ -45,11 +38,11 @@ const gconDetailSave = async (code) => {
 const gconDetailDel = async () => {
     if (confirm("삭제하시겠습니까?")) {
         try {
-            await CustSupMana.delGconDetail(route.params.id)
+            await CustSupMana.delCustSupManaDetail(route.params.id)
             alert("삭제되었습니다");
             router.push("/cust-sup-mana");
         } catch (error) {
-            console.log("지콘 상세 정보 삭제 실패", error);
+            console.log("개인정보처리방침 상세 정보 삭제 실패", error);
         }
     }
 }
@@ -65,7 +58,7 @@ onMounted(async () => {
             <VCard class="auth-card" :class="$vuetify.display.smAndUp ? 'pa-6' : 'pa-0'">
                 <VCardText>
                     <h2 class="mb-1">
-                        GCON 상세
+                        개인정보처리방침 상세
                     </h2>
                 </VCardText>
                 <VCardText class="text-right position-absolute" style="top: 40px; right: 80px;">
@@ -85,13 +78,17 @@ onMounted(async () => {
                             <div class="d-flex">
                                 <div class="d-flex">
                                     <div class="status">
-                                        <input type="radio" id="man" v-model="getGconInfoDetail.status" :value="false"/>
-                                        <label for="man" class="custom-radio" :class="{ 'active-tab': getGconInfoDetail.status === false }">대기</label>
+                                        <input type="radio" id="man" v-model="getGconInfoDetail.status"
+                                            :value="false" />
+                                        <label for="man" class="custom-radio"
+                                            :class="{ 'active-tab': getGconInfoDetail.status === false }">대기</label>
                                     </div>
 
                                     <div class="status">
-                                        <input type="radio" id="women" v-model="getGconInfoDetail.status" :value="true"/>
-                                        <label for="women" class="custom-radio" :class="{ 'active-tab': getGconInfoDetail.status === true }">게시</label>
+                                        <input type="radio" id="women" v-model="getGconInfoDetail.status"
+                                            :value="true" />
+                                        <label for="women" class="custom-radio"
+                                            :class="{ 'active-tab': getGconInfoDetail.status === true }">게시</label>
                                     </div>
                                 </div>
                             </div>
@@ -135,10 +132,10 @@ onMounted(async () => {
 }
 
 .active-tab {
-  color: #696CFF;
+    color: #696CFF;
 }
 
 .status .custom-radio {
-  margin-left: 5px;
+    margin-left: 5px;
 }
 </style>

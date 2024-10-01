@@ -9,6 +9,12 @@ class CustSupMana {
   async getCustSupManaDetail(boardId) {
     return await http.get(`/board/${boardId}`);
   }
+  async delCustSupManaDetail(boardId) {
+    return await http.delete(`/board/${boardId}`);
+  }
+  async patchCustSupManaDetail(data) {
+    return await http.patch(`/board`, data);
+  }
 }
 
 export default new CustSupMana();
