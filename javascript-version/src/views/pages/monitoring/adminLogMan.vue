@@ -1,52 +1,34 @@
 <script setup>
-import CustSupMana from '@/api/CustSupMana';
+import Monitoring from '@/api/Monitoring';
 import { onMounted } from 'vue';
 
 const smartShoesEquArr = ref([])
 const pageSmartShoes = ref(0)
 const size = ref(10)
-const chkArr = ref([])
-const allSelected = ref('')
 const indexPage = ref(1)
 const startDay = ref('')
 const endDay = ref('')
-const category = ref('OPEN_SOURCE_LICENSE')
+const searchUsername = ref('')
 
 const conList = async () => {
     try {
-        const response = await CustSupMana.getCustSupMana(category.value, startDay.value, endDay.value, pageSmartShoes.value, size.value)
+        const response = await Monitoring.getManageLog(startDay.value, endDay.value, searchUsername.value, pageSmartShoes.value, size.value)
         smartShoesEquArr.value = response.data;
     } catch (error) {
-        console.log("오픈소스 라이센스 관리 조회 실패", error);
+        console.log("관리자 로그 조회 실패", error);
     }
 }
-
-const searchDate = async () => {
-    try {
-        const response = await CustSupMana.getCustSupMana(category.value, startDay.value, endDay.value, pageSmartShoes.value, size.value)
-        smartShoesEquArr.value = response.data;
-    } catch (error) {
-        console.log("오픈소스 라이센스 관리 조회 실패", error);
-    }
-}
-
-const selectAll = () => {
-    if (allSelected.value) {
-        chkArr.value = smartShoesEquArr.value.content.map(user => user.shoesSid);
-    } else {
-        chkArr.value = [];
-    }
-};
-
-const toggleSelection = () => {
-    chkArr.value = [...chkArr.value];
-};
 
 const indexPageLoadAllUser = async (page) => {
     indexPage.value = page;
     pageSmartShoes.value = page - 1;
     await conList();
 }
+
+watch(searchUsername, async (newSearchValue) => {
+    pageSmartShoes.value = 0;
+    await conList(newSearchValue);
+});
 
 onMounted(async () => {
     await conList();
@@ -56,71 +38,63 @@ onMounted(async () => {
 
 <template>
     <div>
-        <VCard title="오픈소스 라이센스" class="position-relative">
+        <VCard title="관리자 로그" class="position-relative">
             <div class="px-4">
-                <VBtn class="text-right position-absolute" style="top: 20px; right: 20px;" @click="smartShoesLocDel">
-                    <RouterLink to="/open-source/add">추가</RouterLink>
-                </VBtn>
-                <div class="input_date_box align-center d-flex gap-2" style="width: 500px;">
-                    <VTextField v-model="startDay" type="date" />
+                <div class="input_date_box align-center d-flex gap-2" style="width: 700px;">
+                    <VTextField v-model="startDay" type="date" @change="conList" />
                     <span>~</span>
-                    <VTextField v-model="endDay" type="date" />
-                    <VBtn @click="searchDate">검색</VBtn>
+                    <VTextField v-model="endDay" type="date" @change="conList" />
+
+                    <span class="d-md-flex align-center text-disabled ms-2" style="width:300px;">
+                        <VTextField placeholder="회원 이름 검색" v-model="searchUsername">
+                            <IconBtn style="height: 26px;">
+                                <VIcon icon="bx-search" />
+                            </IconBtn>
+                        </VTextField>
+                    </span>
                 </div>
 
                 <VTable>
                     <thead>
                         <tr>
-                            <th scope="col" class="text-center">
-                                <label>
-                                    <input type="checkbox" @change="selectAll" v-model="allSelected"
-                                        style="cursor: pointer;" />
-                                </label>
-                            </th>
                             <th scope="col" class="text-center">번호</th>
-                            <th scope="col" class="text-center">제목</th>
+                            <th scope="col" class="text-center">관리자명</th>
+                            <th scope="col" class="text-center">관리자 ID</th>
+                            <th scope="col" class="text-center">IP</th>
+                            <th scope="col" class="text-center">브라우저</th>
                             <th scope="col" class="text-center">상태</th>
-                            <th scope="col" class="text-center">게시일</th>
-                            <th scope="col" class="text-center">업데이트 시간</th>
+                            <th scope="col" class="text-center">시간</th>
                         </tr>
                     </thead>
 
                     <tbody v-if="smartShoesEquArr.totalElements !== 0" class="text-center">
                         <tr v-for="(conList, index) in smartShoesEquArr.content" :key="index">
                             <td>
-                                <input style="cursor: pointer;" type="checkbox" v-model="chkArr"
-                                    :value="conList.shoesSid" @change="toggleSelection" />
+                                {{ index + 1 }}
                             </td>
                             <td>
-                                <RouterLink :to="`/open-source/${conList.boardSid}`" class="detailMove">
-                                    {{ index + 1 }}
-                                </RouterLink>
+                                {{ conList.name }}
                             </td>
                             <td>
-                                <RouterLink :to="`/open-source/${conList.boardSid}`" class="detailMove">
-                                    {{ conList.title }}
-                                </RouterLink>
+                                {{ conList.userId }}
                             </td>
                             <td>
-                                <RouterLink :to="`/open-source/${conList.boardSid}`" class="detailMove">
-                                    {{ conList.status === false ? "대기" : "게시중" }}
-                                </RouterLink>
+                                {{ conList.ipAddress }}
                             </td>
                             <td>
-                                <RouterLink :to="`/open-source/${conList.boardSid}`" class="detailMove">
-                                    {{ conList.createDate }}
-                                </RouterLink>
+                                {{ conList.browserInfo }}
                             </td>
                             <td>
-                                <RouterLink :to="`/open-source/${conList.boardSid}`" class="detailMove">
-                                    {{ conList.updateDate }}
-                                </RouterLink>
+                                {{ conList.loginSuccess ? "로그인 성공" : "로그인 실패" }}
+                            </td>
+                            <td>
+                                {{ conList.loginDate }}
                             </td>
                         </tr>
                     </tbody>
                     <tbody v-else>
                         <tr>
-                            <td colspan="6">작성된 오픈소스 라이센스가 없습니다</td>
+                            <td colspan="6">투입된 장비가 없습니다</td>
                         </tr>
                     </tbody>
                 </VTable>

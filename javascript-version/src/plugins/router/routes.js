@@ -130,6 +130,10 @@ export const routes = [
         path: "/terms-of-use/:id",
         component: () => import("@/views/pages/cust-sup-mana/terms-of-use-edit.vue"),
       },
+      {
+        path: "/monitoring/admin-log-man",
+        component: () => import("@/views/pages/monitoring/adminLogMan.vue"),
+      },
     ],
   },
   {

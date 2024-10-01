@@ -120,7 +120,7 @@ onMounted(async () => {
                     </tbody>
                     <tbody v-else>
                         <tr>
-                            <td colspan="6">투입된 장비가 없습니다</td>
+                            <td colspan="6">작성된 개인정보처리 방침이 없습니다</td>
                         </tr>
                     </tbody>
                 </VTable>

@@ -1,43 +1,57 @@
 <script setup>
-import VerticalNavSectionTitle from '@/@layouts/components/VerticalNavSectionTitle.vue'
+// import VerticalNavSectionTitle from '@/@layouts/components/VerticalNavSectionTitle.vue'
 import VerticalNavGroup from '@layouts/components/VerticalNavGroup.vue'
 import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
+import { onMounted } from 'vue'
+
+import Nav from '@/api/Nav'
+
+const navDate = ref([])
+const CUDDate = ref({})
+
+const loadNavList = async () => {
+  try {
+    const response = await Nav.getNav()
+    navDate.value = response.data
+    console.log("navDate.value", navDate.value)
+  } catch (e) {
+    console.log("네비 메뉴 조회 실패", e)
+  }
+}
+
+const loadCUD = async () => {
+  try {
+    const response = await Nav.getCUD(user.value)
+    CUDDate.value = response.data
+    console.log("CUDDate.value", CUDDate.value)
+  } catch (e) {
+    console.log("CUD 권한 조회 실패", e)
+  }
+}
+
+onMounted(async () => {
+  await loadNavList()
+  await getUserInfo()
+  await loadCUD()
+})
+
+// badgeContent: '5',
+// badgeClass: 'bg-error',
 </script>
 
 <template>
 
-  <!-- 👉 home -->
-  <!-- <VerticalNavLink :item="{
-    title: 'home',
-    icon: 'bx-home-smile',
-    to: '/dashboard',
+  <!-- <VerticalNavGroup v-for="(nav, index) in navDate" :key="index" class="top-menu" :item="{
+    title: `${nav.menuName}`,
   }">
-  </VerticalNavLink> -->
-
-  <!-- 모니터링 -->
-  <VerticalNavSectionTitle :item="{
-    heading: 'Monitor',
-  }" />
-  <VerticalNavGroup :item="{
-    title: '모니터링',
-    badgeContent: '1',
-    badgeClass: 'bg-error',
-    icon: 'bx-layout',
-  }">
-    <VerticalNavLink :item="{
-      title: '메인 대시보드',
-      to: '/user/ddd',
+    <VerticalNavLink v-for="(sub, i) in nav.children" :key="i" :item="{
+      title: `${sub.menuName}`,
+      to: `${sub.menuUrl}`,
     }" />
-  </VerticalNavGroup>
+  </VerticalNavGroup> -->
 
-  <!-- 자원관리 -->
-  <VerticalNavSectionTitle :item="{
-    heading: 'Resources',
-  }" />
-  <VerticalNavGroup :item="{
+  <VerticalNavGroup class="top-menu" :item="{
     title: '자원관리',
-    badgeContent: '5',
-    badgeClass: 'bg-error',
     icon: 'bx-command',
   }">
     <VerticalNavLink :item="{
@@ -63,14 +77,8 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
   </VerticalNavGroup>
 
 
-  <!-- 사물인식 모델링 관리 -->
-  <VerticalNavSectionTitle :item="{
-    heading: 'Object Recognition',
-  }" />
-  <VerticalNavGroup :item="{
+  <VerticalNavGroup class="top-menu" :item="{
     title: '사물인식 모델링 관리',
-    badgeContent: '1',
-    badgeClass: 'bg-error',
     icon: 'bx-analyse',
   }">
     <VerticalNavLink :item="{
@@ -80,14 +88,8 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
   </VerticalNavGroup>
 
 
-  <!-- 회원관리 -->
-  <VerticalNavSectionTitle :item="{
-    heading: 'User',
-  }" />
-  <VerticalNavGroup :item="{
+  <VerticalNavGroup class="top-menu" :item="{
     title: '회원관리',
-    badgeContent: '4',
-    badgeClass: 'bg-error',
     icon: 'bx-user',
   }">
     <VerticalNavLink :item="{
@@ -109,14 +111,8 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
   </VerticalNavGroup>
 
 
-  <!-- 관리자 관리 -->
-  <VerticalNavSectionTitle :item="{
-    heading: 'Admin Manage',
-  }" />
-  <VerticalNavGroup :item="{
+  <VerticalNavGroup class="top-menu" :item="{
     title: '관리자 관리',
-    badgeContent: '3',
-    badgeClass: 'bg-error',
     icon: 'bx-atom',
   }">
     <VerticalNavLink :item="{
@@ -131,21 +127,15 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
       title: '관리자 권한 메뉴 관리',
       to: '/manage/admin-menu-management',
     }" />
-    <!-- <VerticalNavLink :item="{
+    <VerticalNavLink :item="{
       title: '관리자 로그 관리',
-      to: '/user/ddd',
-    }" /> -->
+      to: '/monitoring/admin-log-man',
+    }" />
   </VerticalNavGroup>
 
-
-  <!-- 고객지원 관리 -->
-  <VerticalNavSectionTitle :item="{
-    heading: 'Customer Support',
-  }" />
-  <VerticalNavGroup :item="{
+  
+  <VerticalNavGroup class="top-menu" :item="{
     title: '고객지원 관리',
-    badgeContent: '3',
-    badgeClass: 'bg-error',
     icon: 'bx-file',
   }">
     <VerticalNavLink :item="{
@@ -298,3 +288,9 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
     target: '_blank',
   }" /> -->
 </template>
+
+<style scoped>
+.top-menu {
+  margin: 25px 0;
+}
+</style>
