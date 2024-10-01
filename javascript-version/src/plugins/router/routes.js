@@ -96,6 +96,11 @@ export const routes = [
           import("@/views/pages/cust-sup-mana/customer-support-management.vue"),
       },
       {
+        path: "/cust-sup-mana/add",
+        component: () =>
+          import("@/views/pages/cust-sup-mana/cust-sup-mana-add.vue"),
+      },
+      {
         path: "/cust-sup-mana/:id",
         component: () =>
           import("@/views/pages/cust-sup-mana/cust-sup-mana-edit.vue"),

@@ -15,6 +15,9 @@ class CustSupMana {
   async patchCustSupManaDetail(data) {
     return await http.patch(`/board`, data);
   }
+  async postCustSupManaDetail(data) {
+    return await http.post(`/board`, data);
+  }
 }
 
 export default new CustSupMana();

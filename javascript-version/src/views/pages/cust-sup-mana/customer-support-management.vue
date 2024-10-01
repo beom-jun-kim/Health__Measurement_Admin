@@ -2,20 +2,12 @@
 import CustSupMana from '@/api/CustSupMana';
 import { onMounted } from 'vue';
 
-const smartShoesPostObj = ref({
-    containerSid: "",
-    shoesName: "",
-    leftSensorId: "",
-    rightSensorId: "",
-    remark: "",
-})
 const smartShoesEquArr = ref([])
 const pageSmartShoes = ref(0)
 const size = ref(10)
 const chkArr = ref([])
 const allSelected = ref('')
 const indexPage = ref(1)
-const gconSelectList = ref([])
 const startDay = ref('')
 const endDay = ref('')
 const category = ref('TERMS_OF_SERVICE')
@@ -58,77 +50,6 @@ const indexPageLoadAllUser = async (page) => {
     await conList();
 }
 
-const smartShoesLocSave = async () => {
-    if (chkArr.value.length === 0) {
-        alert("수정하시고자 하는 신발을 체크하여 주세요")
-    } else {
-        if (confirm("수정하시겠습니까?")) {
-            try {
-                const data = smartShoesEquArr.value.content
-                    .filter(user => chkArr.value.includes(user.shoesSid))
-                    .map(user => ({
-                        shoesSid: user.shoesSid,
-                        shoesName: user.shoesName,
-                        leftSensorId: user.leftSensorId,
-                        rightSensorId: user.rightSensorId,
-                        containerSid: user.containerSid,
-                        remark: user.remark,
-                    }));
-                await CustSupMana.shoesPatch(data)
-                alert("수정되었습니다");
-                await conList();
-            } catch (error) {
-                console.log("신발 상태 수정 실패", error);
-            }
-        }
-    }
-}
-
-const smartShoesLocDel = async () => {
-    if (chkArr.value.length === 0) {
-        alert("삭제하시고자 하는 신발을 체크하여 주세요")
-    } else {
-        if (confirm("삭제하시겠습니까?")) {
-            try {
-                const data = smartShoesEquArr.value.content
-                    .filter(user => chkArr.value.includes(user.shoesSid))
-                    .map(user => user.shoesSid)
-                    .join(',');
-                console.log("1", data)
-                await CustSupMana.shoesDel(data)
-                alert("삭제되었습니다");
-                await conList();
-            } catch (error) {
-                console.log("신발 삭제 실패", error);
-            }
-        }
-    }
-}
-
-const smartShoesAdd = async () => {
-    if (smartShoesPostObj.value.shoesName === '') {
-        alert("신발명을 작성하여주세요")
-    } else {
-        if (confirm("추가하시겠습니까?")) {
-            try {
-                const data = {
-                    shoesName: smartShoesPostObj.value.shoesName,
-                    leftSensorId: smartShoesPostObj.value.leftSensorId,
-                    rightSensorId: smartShoesPostObj.value.rightSensorId,
-                    containerSid: smartShoesPostObj.value.containerSid,
-                    remark: smartShoesPostObj.value.remark,
-                }
-                await CustSupMana.shoesPost(data)
-                alert("추가되었습니다");
-                await conList();
-            } catch (error) {
-                console.log("신발 추가 실패", error);
-            }
-        }
-    }
-}
-
-
 onMounted(async () => {
     await conList();
 })
@@ -140,7 +61,7 @@ onMounted(async () => {
         <VCard title="개인정보처리방침 리스트" class="position-relative">
             <div class="px-4">
                 <VBtn class="text-right position-absolute" style="top: 20px; right: 20px;" @click="smartShoesLocDel">
-                    <RouterLink to="/gcon-container-add">추가</RouterLink>
+                    <RouterLink to="/cust-sup-mana/add">추가</RouterLink>
                 </VBtn>
                 <div class="input_date_box align-center d-flex gap-2" style="width: 500px;">
                     <VTextField v-model="startDay" type="date" />

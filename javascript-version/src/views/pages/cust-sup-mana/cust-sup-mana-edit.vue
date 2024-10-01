@@ -19,7 +19,7 @@ const loadUserDetail = async (id) => {
 }
 
 const gconDetailSave = async (id) => {
-    if (confirm("저장하시겠습니까?")) {
+    if (confirm("수정하시겠습니까?")) {
         try {
             const data = {
                 boardSid: id,
@@ -28,7 +28,7 @@ const gconDetailSave = async (id) => {
                 content: getGconInfoDetail.value.content,
             }
             await CustSupMana.patchCustSupManaDetail(data)
-            alert("저장되었습니다");
+            alert("수정되었습니다");
         } catch (error) {
             console.log("개인정보처리방침 상세 정보 수정 실패", error);
         }
@@ -62,7 +62,7 @@ onMounted(async () => {
                     </h2>
                 </VCardText>
                 <VCardText class="text-right position-absolute" style="top: 40px; right: 80px;">
-                    <VBtn @click="gconDetailSave(getGconInfoDetail.boardSid)">저장</VBtn>
+                    <VBtn @click="gconDetailSave(getGconInfoDetail.boardSid)">수정</VBtn>
                 </VCardText>
                 <VCardText class="text-right position-absolute" style="top: 40px; right: 0;">
                     <VBtn @click="gconDetailDel">삭제</VBtn>
@@ -136,6 +136,6 @@ onMounted(async () => {
 }
 
 .status .custom-radio {
-    margin-left: 5px;
+    margin-right: 20px;
 }
 </style>
