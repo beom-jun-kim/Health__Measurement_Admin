@@ -101,7 +101,7 @@ onMounted(async () => {
     <VRow>
         <VCol>
             <VCard title="관리자 권한 리스트">
-                <VTable class="px-6">
+                <VTable class="px-6 adminRoleList">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">번호</th>
@@ -228,6 +228,10 @@ li.active {
     border: none;
 }
 
+.adminRoleList td {
+    cursor: pointer;
+}
+
 select {
     border: 1px solid rgba(34, 48, 62, 0.217);
     padding: 0 10px;
@@ -249,6 +253,7 @@ select {
 .crudBtn {
     position: absolute;
     top: 26px;
+    cursor: pointer;
 }
 
 .crudBtn.add {

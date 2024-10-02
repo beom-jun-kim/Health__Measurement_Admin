@@ -134,6 +134,10 @@ export const routes = [
         path: "/monitoring/admin-log-man",
         component: () => import("@/views/pages/monitoring/adminLogMan.vue"),
       },
+      {
+        path: "/monitoring/user-log-man",
+        component: () => import("@/views/pages/monitoring/userLogMan.vue"),
+      },
     ],
   },
   {

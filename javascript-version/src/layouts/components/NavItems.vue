@@ -19,9 +19,9 @@ const loadNavList = async () => {
   }
 }
 
-const loadCUD = async () => {
+const loadCUD = async (id) => {
   try {
-    const response = await Nav.getCUD(user.value)
+    const response = await Nav.getCUD(id)
     CUDDate.value = response.data
     console.log("CUDDate.value", CUDDate.value)
   } catch (e) {
@@ -31,24 +31,35 @@ const loadCUD = async () => {
 
 onMounted(async () => {
   await loadNavList()
-  await getUserInfo()
-  await loadCUD()
 })
 
-// badgeContent: '5',
-// badgeClass: 'bg-error',
 </script>
 
 <template>
 
-  <!-- <VerticalNavGroup v-for="(nav, index) in navDate" :key="index" class="top-menu" :item="{
+  <VerticalNavGroup v-for="(nav, index) in navDate" :key="index" class="top-menu" :item="{
     title: `${nav.menuName}`,
+    icon: `${nav.menuIcon}`,
   }">
-    <VerticalNavLink v-for="(sub, i) in nav.children" :key="i" :item="{
+    <VerticalNavLink @click="loadCUD(sub.menuSid)" v-for="(sub, i) in nav.children" :key="i" :item="{
       title: `${sub.menuName}`,
       to: `${sub.menuUrl}`,
     }" />
-  </VerticalNavGroup> -->
+  </VerticalNavGroup>
+
+  <!-- <VerticalNavGroup class="top-menu" :item="{
+    title: '모니터링',
+    icon: 'bx-layout',
+  }">
+    <VerticalNavLink :item="{
+      title: '관리자 로그 관리',
+      to: '/monitoring/admin-log-man',
+    }" />
+    <VerticalNavLink :item="{
+      title: '회원 로그 관리',
+      to: '/monitoring/user-log-man',
+    }" />
+  </VerticalNavGroup>
 
   <VerticalNavGroup class="top-menu" :item="{
     title: '자원관리',
@@ -127,10 +138,6 @@ onMounted(async () => {
       title: '관리자 권한 메뉴 관리',
       to: '/manage/admin-menu-management',
     }" />
-    <VerticalNavLink :item="{
-      title: '관리자 로그 관리',
-      to: '/monitoring/admin-log-man',
-    }" />
   </VerticalNavGroup>
 
   
@@ -150,7 +157,7 @@ onMounted(async () => {
       title: '서비스 이용약관 관리',
       to: '/terms-of-use',
     }" />
-  </VerticalNavGroup>
+  </VerticalNavGroup> -->
 
 
   <!-- 👉 Apps & Pages -->

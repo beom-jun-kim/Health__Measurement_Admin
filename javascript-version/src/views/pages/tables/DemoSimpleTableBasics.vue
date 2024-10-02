@@ -1,6 +1,7 @@
 <script setup>
 import GconUserManage from '@/api/GconUserManage';
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
+import debounce from 'lodash/debounce';
 
 const getAllUserArr = ref([])
 const pageUser = ref(0)
@@ -60,9 +61,9 @@ const statusSave = async () => {
   }
 }
 
-watch(searchUsername, async (newSearchValue) => {
+const onSearchUsernameChange = debounce(async () => {
   pageUser.value = 0;
-  await userSearch(newSearchValue);
+  await userSearch(searchUsername.value);
 });
 
 const userSearch = async (searchValue) => {
@@ -80,13 +81,17 @@ onMounted(async () => {
   await getAllUser();
 })
 
+onUnmounted(() => {
+  onSearchUsernameChange.cancel();
+});
+
 </script>
 
 <template>
   <div class="position-relative">
     <div class="d-flex align-center cursor-pointer ms-lg-n3" style="user-select: none;">
       <span class="d-md-flex align-center text-disabled ms-5" style="width:300px;">
-        <VTextField placeholder="회원 이름 검색" v-model="searchUsername">
+        <VTextField placeholder="회원 이름 검색" v-model="searchUsername" @input="onSearchUsernameChange">
           <IconBtn>
             <VIcon icon="bx-search" />
           </IconBtn>
