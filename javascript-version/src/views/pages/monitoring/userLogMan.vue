@@ -19,7 +19,6 @@ const selectlocation = ref([{
 ])
 
 const conList = async (searchValue) => {
-    console.log("searchValue", searchValue)
     try {
         const searchParam = searchValue || '';
         const response = await Monitoring.getUserLog(startDay.value, endDay.value, searchParam, containerName.value, pageSmartShoes.value, size.value)

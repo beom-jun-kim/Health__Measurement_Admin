@@ -31,7 +31,6 @@ const loadUserDetail = async (id) => {
     try {
         const response = await GconContainer.getGconDetail(id)
         getGconInfoDetail.value = response.data;
-        console.log("getGconInfoDetail.value", getGconInfoDetail.value);
         await getCityes()
     } catch (error) {
         console.log("지콘 상세조회 실패", error);

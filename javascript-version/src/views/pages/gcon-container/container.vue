@@ -185,7 +185,8 @@ select {
     line-height: 49px;
 }
 
-.td {
+.td,
+.cityes {
     cursor: pointer;
 }
 

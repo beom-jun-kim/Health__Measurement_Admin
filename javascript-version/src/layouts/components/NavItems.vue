@@ -1,12 +1,9 @@
 <script setup>
-// import VerticalNavSectionTitle from '@/@layouts/components/VerticalNavSectionTitle.vue'
 import VerticalNavGroup from '@layouts/components/VerticalNavGroup.vue'
 import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
 import { onMounted } from 'vue'
 import Nav from '@/api/Nav'
-import { useRouter } from 'vue-router'
 
-const router = useRouter()
 const navDate = ref([])
 const CUDDate = ref({})
 
@@ -14,7 +11,6 @@ const loadNavList = async () => {
   try {
     const response = await Nav.getNav()
     navDate.value = response.data
-    console.log("navDate.value", navDate.value)
   } catch (e) {
     console.log("네비 메뉴 조회 실패", e)
   }
