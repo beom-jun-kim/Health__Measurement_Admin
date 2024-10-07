@@ -60,6 +60,9 @@ const roleAdd = async () => {
             await getAdminRoles()
         } catch (e) {
             console.log("추가실패", e)
+            if (e.response.data.errorCode === "INTERNAL_SERVER_ERROR") {
+                alert("해당 권한은 이미 추가되어 있어 추가 할 수 없습니다")
+            }
         }
     }
 }
@@ -87,6 +90,9 @@ const roleDel = async () => {
             await getAdminRoles()
         } catch (e) {
             console.log("삭제실패", e)
+            if (e.response.data.errorCode === "INTERNAL_SERVER_ERROR") {
+                alert("해당 권한은 현재 관리자에게 설정되어 있어 삭제할 수 없습니다\n'관리자 리스트'를 확인해주세요")
+            }
         }
     }
 }
@@ -101,6 +107,8 @@ onMounted(async () => {
     <VRow>
         <VCol>
             <VCard title="관리자 권한 리스트">
+                <p class="ps-4 mb-0">※ 권한을 클릭하여 <b>해당 권한 관리자 리스트</b>를 확인 할 수 있습니다</p>
+                <p class="ps-4">※ <b>권한상세</b>를 통해 권한을 추가 및 수정 , 삭제를 진행하세요</p>
                 <VTable class="px-6 adminRoleList">
                     <thead>
                         <tr>
@@ -109,7 +117,6 @@ onMounted(async () => {
                             <th scope="col" class="text-center">비고</th>
                         </tr>
                     </thead>
-
                     <tbody v-if="adminRoleListDate.totalElements !== 0" class="text-center">
                         <tr v-for="(getAdminRole, index) in adminRoleListDate.content" :key="index">
                             <td
@@ -192,7 +199,7 @@ onMounted(async () => {
                     </tbody>
                     <tbody v-else>
                         <tr>
-                            <td colspan="3">설정된 권한이 없습니다.</td>
+                            <td colspan="3">해당 권한을 가진 관리자가 없습니다</td>
                         </tr>
                     </tbody>
                 </VTable>

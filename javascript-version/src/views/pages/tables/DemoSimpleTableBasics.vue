@@ -2,6 +2,7 @@
 import GconUserManage from '@/api/GconUserManage';
 import { onMounted, onUnmounted } from 'vue';
 import debounce from 'lodash/debounce';
+import { useCUDDate } from '@/utilityFunc/getCudDate';
 
 const getAllUserArr = ref([])
 const pageUser = ref(0)
@@ -11,6 +12,8 @@ const chkArr = ref([])
 const allSelected = ref('')
 const indexPage = ref(1)
 const searchUsername = ref('')
+
+const { loadcudDate, getCudDate } = useCUDDate();
 
 const getAllUser = async () => {
   try {
@@ -79,6 +82,7 @@ const userSearch = async (searchValue) => {
 
 onMounted(async () => {
   await getAllUser();
+  await getCudDate();
 })
 
 onUnmounted(() => {
@@ -98,7 +102,7 @@ onUnmounted(() => {
         </VTextField>
       </span>
     </div>
-    <VCardText class="text-right position-absolute" style="top: -20px; right: 0;">
+    <VCardText v-if="loadcudDate.update" class="text-right position-absolute" style="top: -20px; right: 0;">
       <VBtn @click="statusSave">저장</VBtn>
     </VCardText>
     <VTable>

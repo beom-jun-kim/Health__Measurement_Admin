@@ -25,7 +25,7 @@ const userLogin = async () => {
       password: form.value.password,
     }
     await UserDataService.login(data);
-    router.push("/dashboard");
+    router.push("/home");
   } catch (error) {
     console.log("로그인 실패", error);
     if (error.response.data.errorMessage) {

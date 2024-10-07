@@ -40,16 +40,36 @@ const getAllRole = async () => {
 
 const selectAll = () => {
     if (allSelected.value) {
+        getAdminMenuGroupBy.value.forEach(user => {
+            user.isCheck = true;
+            if (user.subMenus && user.subMenus.length > 0) {
+                user.subMenus.forEach(subMenu => {
+                    subMenu.isCheck = true;
+                });
+            }
+        });
+
         const topMenu = getAdminMenuGroupBy.value.map(user => user.menuSid);
         const selectSubRole = getAdminMenuGroupBy.value.filter(role => role.subMenus);
         const bottomMenu = selectSubRole.flatMap(role =>
             role.subMenus.map(subMenu => subMenu.menuSid)
         );
-        chkArr.value = [...topMenu, ...bottomMenu]
+        chkArr.value = [...topMenu, ...bottomMenu];
+
     } else {
+        getAdminMenuGroupBy.value.forEach(user => {
+            user.isCheck = false;
+            if (user.subMenus && user.subMenus.length > 0) {
+                user.subMenus.forEach(subMenu => {
+                    subMenu.isCheck = false;
+                });
+            }
+        });
+
         chkArr.value = [];
     }
 };
+
 
 const toggleSelection = (menuSid) => {
     chkArr.value = [...chkArr.value];

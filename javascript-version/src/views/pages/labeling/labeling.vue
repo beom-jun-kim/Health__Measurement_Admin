@@ -1,6 +1,7 @@
 <script setup>
 import Labeling from '@/api/Labeling';
 import { onMounted } from 'vue';
+import { useCUDDate } from '@/utilityFunc/getCudDate';
 
 const labelingImgDate = ref([])
 const labelingPage = ref(0)
@@ -8,6 +9,8 @@ const indexPage = ref(1)
 const size = ref(6)
 const getLabelingSelectData = ref({})
 const chkArr = ref([])
+
+const { loadcudDate, getCudDate } = useCUDDate();
 
 const loadLabelingImg = async () => {
     try {
@@ -88,6 +91,7 @@ const toggleSelection = () => {
 
 onMounted(async () => {
     await loadLabelingImg()
+    await getCudDate();
 })
 
 
@@ -95,10 +99,10 @@ onMounted(async () => {
 
 <template>
     <VCard title="사물인식 라벨링" class="position-relative">
-        <VBtn class="text-right position-absolute" style="top: 20px; right: 110px;" @click="saveLabelingDate">
+        <VBtn v-if="loadcudDate.update" class="text-right position-absolute roleBtn" :class="{ 'role': loadcudDate.delete }" @click="saveLabelingDate">
             저장
         </VBtn>
-        <VBtn class="text-right position-absolute" style="top: 20px; right: 30px;" @click="delLabelingDate">
+        <VBtn v-if="loadcudDate.delete" class="text-right position-absolute roleBtn" @click="delLabelingDate">
             삭제
         </VBtn>
         <div v-if="labelingImgDate.totalElements !== 0" class="px-6 gap-5 labelingImgDateContentWrap">
@@ -239,5 +243,14 @@ select {
 
 .idText {
     font-size: 20px;
+}
+
+.roleBtn {
+    top: 20px;
+    right: 20px;
+}
+
+.role {
+    right: 100px;
 }
 </style>

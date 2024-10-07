@@ -2,6 +2,9 @@
 import Camera from '@/api/Camera';
 import GconContainer from '@/api/GconContainer';
 import { onMounted } from 'vue';
+import { useCUDDate } from '@/utilityFunc/getCudDate';
+
+const { loadcudDate, getCudDate } = useCUDDate();
 
 const smartShoesPostObj = ref({
     containerSid: "",
@@ -107,10 +110,10 @@ const smartShoesAdd = async () => {
         if (confirm("추가하시겠습니까?")) {
             try {
                 const data = {
-                    cameraName:smartShoesPostObj.value.cameraName,
-                    cameraIp:smartShoesPostObj.value.cameraIp,
-                    containerSid:smartShoesPostObj.value.containerSid,
-                    remark:smartShoesPostObj.value.remark,
+                    cameraName: smartShoesPostObj.value.cameraName,
+                    cameraIp: smartShoesPostObj.value.cameraIp,
+                    containerSid: smartShoesPostObj.value.containerSid,
+                    remark: smartShoesPostObj.value.remark,
                 }
                 await Camera.postCamera(data)
                 alert("추가되었습니다");
@@ -125,6 +128,7 @@ const smartShoesAdd = async () => {
 
 onMounted(async () => {
     await conList();
+    await getCudDate();
 })
 
 </script>
@@ -132,10 +136,11 @@ onMounted(async () => {
 <template>
     <div>
         <VCard title="카메라 관리" class="position-relative">
-            <VBtn class="text-right position-absolute" style="top: 20px; right: 100px;" @click="smartShoesLocSave">
+            <VBtn v-if="loadcudDate.update" class="text-right position-absolute roleBtn"
+                :class="{ 'role': loadcudDate.delete }" @click="smartShoesLocSave">
                 수정
             </VBtn>
-            <VBtn class="text-right position-absolute" style="top: 20px; right: 20px;" @click="smartShoesLocDel">
+            <VBtn v-if="loadcudDate.delete" class="text-right position-absolute roleBtn" @click="smartShoesLocDel">
                 삭제
             </VBtn>
             <VTable>
@@ -198,7 +203,7 @@ onMounted(async () => {
                 </nav>
             </div>
         </VCard>
-        <VCard title="카메라 추가하기" class="position-relative mt-4">
+        <VCard v-if="loadcudDate.create" title="카메라 추가하기" class="position-relative mt-4">
             <VCardText class="text-right position-absolute" style="top: 20px; right: 0;">
                 <VBtn @click="smartShoesAdd">추가</VBtn>
             </VCardText>
@@ -206,14 +211,14 @@ onMounted(async () => {
                 <VRow>
                     <VCol cols="4">
                         <div class="my-2">카메라명</div>
-                        <VTextField v-model="smartShoesPostObj.cameraName" :value="smartShoesPostObj.cameraName" autofocus
-                            placeholder="예) Camera1" />
+                        <VTextField v-model="smartShoesPostObj.cameraName" :value="smartShoesPostObj.cameraName"
+                            autofocus placeholder="예) Camera1" />
                     </VCol>
 
                     <VCol cols="4">
                         <div class="my-2">IP</div>
-                        <VTextField v-model="smartShoesPostObj.cameraIp" :value="smartShoesPostObj.cameraIp"
-                            autofocus placeholder="예) 192.168.1.1.1" />
+                        <VTextField v-model="smartShoesPostObj.cameraIp" :value="smartShoesPostObj.cameraIp" autofocus
+                            placeholder="예) 192.168.1.1.1" />
                     </VCol>
 
                     <VCol cols="4">
@@ -274,5 +279,14 @@ select {
     display: block;
     height: 100%;
     line-height: 49px;
+}
+
+.roleBtn {
+    top: 20px;
+    right: 20px;
+}
+
+.role {
+    right: 100px;
 }
 </style>

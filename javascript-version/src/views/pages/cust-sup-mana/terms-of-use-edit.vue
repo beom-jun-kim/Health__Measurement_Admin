@@ -2,7 +2,9 @@
 import CustSupMana from '@/api/CustSupMana';
 import { useRouter, useRoute } from 'vue-router';
 import { onMounted } from 'vue';
+import { useCUDDate } from '@/utilityFunc/getCudDate';
 
+const { loadcudDate, getCudDate } = useCUDDate();
 
 const router = useRouter();
 const route = useRoute();
@@ -49,6 +51,7 @@ const gconDetailDel = async () => {
 
 onMounted(async () => {
     await loadUserDetail(route.params.id);
+    await getCudDate();
 })
 </script>
 
@@ -61,10 +64,11 @@ onMounted(async () => {
                         서비스 이용약관 상세
                     </h2>
                 </VCardText>
-                <VCardText class="text-right position-absolute" style="top: 40px; right: 80px;">
+                <VCardText v-if="loadcudDate.update" :class="{ 'role': loadcudDate.delete }"
+                    class="text-right position-absolute roleBtn">
                     <VBtn @click="gconDetailSave(getGconInfoDetail.boardSid)">수정</VBtn>
                 </VCardText>
-                <VCardText class="text-right position-absolute" style="top: 40px; right: 0;">
+                <VCardText v-if="loadcudDate.delete" class="text-right position-absolute roleBtn">
                     <VBtn @click="gconDetailDel">삭제</VBtn>
                 </VCardText>
                 <VCardText>
@@ -137,5 +141,14 @@ onMounted(async () => {
 
 .status .custom-radio {
     margin-right: 20px;
+}
+
+.roleBtn {
+    top: 40px;
+    right: 0;
+}
+
+.role {
+    right: 80px;
 }
 </style>

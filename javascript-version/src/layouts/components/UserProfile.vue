@@ -13,6 +13,7 @@ const logout = async () => {
     try {
       await UserDataService.logout();
       localStorage.removeItem('Authorization');
+      localStorage.removeItem('CUDData');
       alert("로그아웃되었습니다");
       router.push("/login");
     } catch (error) {

@@ -1,6 +1,7 @@
 <script setup>
 import CustSupMana from '@/api/CustSupMana';
 import { onMounted } from 'vue';
+import { useCUDDate } from '@/utilityFunc/getCudDate';
 
 const smartShoesEquArr = ref([])
 const pageSmartShoes = ref(0)
@@ -11,6 +12,8 @@ const indexPage = ref(1)
 const startDay = ref('')
 const endDay = ref('')
 const category = ref('PRIVACY_POLICY')
+
+const { loadcudDate, getCudDate } = useCUDDate();
 
 const conList = async () => {
     try {
@@ -50,6 +53,7 @@ const indexPageLoadAllUser = async (page) => {
 
 onMounted(async () => {
     await conList();
+    await getCudDate();
 })
 
 </script>
@@ -58,7 +62,7 @@ onMounted(async () => {
     <div>
         <VCard title="개인정보처리방침 리스트" class="position-relative">
             <div class="px-4">
-                <VBtn class="text-right position-absolute" style="top: 20px; right: 20px;" @click="smartShoesLocDel">
+                <VBtn v-if="loadcudDate.create" class="text-right position-absolute" style="top: 20px; right: 20px;" @click="smartShoesLocDel">
                     <RouterLink to="/cust-sup-mana/add">추가</RouterLink>
                 </VBtn>
                 <div class="input_date_box align-center d-flex gap-2" style="width: 500px;">

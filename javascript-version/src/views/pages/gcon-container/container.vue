@@ -1,6 +1,7 @@
 <script setup>
 import GconContainer from '@/api/GconContainer';
 import { onMounted } from 'vue';
+import { useCUDDate } from '@/utilityFunc/getCudDate';
 
 const getCityList = ref([])
 const getGconDate = ref([])
@@ -8,6 +9,8 @@ const gConPage = ref(0)
 const gConSize = ref(10)
 const gConIndexPage = ref(1)
 const selectedCityCode = ref(null)
+
+const { loadcudDate, getCudDate } = useCUDDate();
 
 const getCityes = async () => {
     try {
@@ -44,7 +47,9 @@ const indexPageLoadGcon = async (page) => {
 
 onMounted(async () => {
     await getCityes();
+    await getCudDate();
 })
+
 
 </script>
 
@@ -53,12 +58,6 @@ onMounted(async () => {
         <VCol cols="2">
             <VCard title="지역">
                 <VTable style="border-radius: 0;">
-                    <!-- <thead>
-                        <tr>
-                            <th scope="col" class="text-center">지역</th>
-                        </tr>
-                    </thead> -->
-
                     <tbody v-if="getCityList !== 0" class="text-center">
                         <tr v-for="(city, index) in getCityList" :key="index">
                             <td @click="getGconList(city.code)" class="cityes"
@@ -78,7 +77,8 @@ onMounted(async () => {
         <VCol cols="10">
             <VCard title="GCON 리스트">
                 <div class="position-relative">
-                    <VCardText class="text-right position-absolute" style="top: -70px; right: 0;">
+                    <VCardText v-if="loadcudDate.create" class="text-right position-absolute"
+                        style="top: -70px; right: 0;">
                         <RouterLink to="/gcon-container-add">추가</RouterLink>
                     </VCardText>
                     <VTable>

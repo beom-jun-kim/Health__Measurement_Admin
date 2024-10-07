@@ -2,6 +2,7 @@
 import GconContainer from '@/api/GconContainer';
 import { useRouter, useRoute } from 'vue-router';
 import { onMounted } from 'vue';
+import { useCUDDate } from '@/utilityFunc/getCudDate';
 
 const router = useRouter();
 const route = useRoute();
@@ -10,6 +11,8 @@ const getGconInfoDetail = ref({})
 const getCityList = ref([])
 const getThisCity = ref({})
 const equipment = ref([]);
+
+const { loadcudDate, getCudDate } = useCUDDate();
 
 const smaeCityCode = async () => {
     getThisCity.value = getCityList.value.find((item) => item.code === getGconInfoDetail.value.code);
@@ -84,6 +87,7 @@ onMounted(async () => {
     await loadUserDetail(route.params.id);
     await smaeCityCode();
     await getEquipment(route.params.id);
+    await getCudDate();
 })
 </script>
 
@@ -96,10 +100,10 @@ onMounted(async () => {
                         GCON 상세
                     </h2>
                 </VCardText>
-                <VCardText class="text-right position-absolute" style="top: 40px; right: 80px;">
+                <VCardText v-if="loadcudDate.update" :class="{ 'role': loadcudDate.delete }" class="text-right position-absolute roleBtn">
                     <VBtn @click="gconDetailSave(getThisCity.code)">저장</VBtn>
                 </VCardText>
-                <VCardText class="text-right position-absolute" style="top: 40px; right: 0;">
+                <VCardText v-if="loadcudDate.delete" class="text-right position-absolute roleBtn">
                     <VBtn @click="gconDetailDel">삭제</VBtn>
                 </VCardText>
                 <VCardText>
@@ -182,5 +186,14 @@ select {
     cursor: pointer;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800px' height='800px' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z' fill='%230F0F0F'/%3E%3C/svg%3E") no-repeat right 10px center;
     background-size: 16px 16px;
+}
+
+.roleBtn {
+    top: 40px;
+    right: 0px;
+}
+
+.role {
+    right: 80px;
 }
 </style>
