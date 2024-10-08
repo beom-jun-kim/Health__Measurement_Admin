@@ -6,17 +6,17 @@ export const routes = [
     children: [
       {
         path: "home",
-        name:"Home",
+        name: "Home",
         component: () => import("@/pages/dashboard.vue"),
       },
       {
         path: "/user/profile",
-        name:"UserProfile",
+        name: "UserProfile",
         component: () => import("@/views/pages/user/profile.vue"),
       },
       {
         path: "account-settings",
-        name:"AccountSettings",
+        name: "AccountSettings",
         component: () => import("@/pages/account-settings.vue"),
       },
       {
@@ -131,7 +131,8 @@ export const routes = [
       {
         path: "/open-source/add",
         name: "OpenSourceAdd",
-        component: () => import("@/views/pages/cust-sup-mana/open-source-add.vue"),
+        component: () =>
+          import("@/views/pages/cust-sup-mana/open-source-add.vue"),
       },
       {
         path: "/open-source/:id",
@@ -147,12 +148,14 @@ export const routes = [
       {
         path: "/terms-of-use/add",
         name: "TermsOfUseAdd",
-        component: () => import("@/views/pages/cust-sup-mana/terms-of-use-add.vue"),
+        component: () =>
+          import("@/views/pages/cust-sup-mana/terms-of-use-add.vue"),
       },
       {
         path: "/terms-of-use/:id",
         name: "TermsOfUseEdit",
-        component: () => import("@/views/pages/cust-sup-mana/terms-of-use-edit.vue"),
+        component: () =>
+          import("@/views/pages/cust-sup-mana/terms-of-use-edit.vue"),
       },
       {
         path: "/monitoring/admin-log-man",
@@ -163,6 +166,11 @@ export const routes = [
         path: "/monitoring/user-log-man",
         name: "UserLogMan",
         component: () => import("@/views/pages/monitoring/userLogMan.vue"),
+      },
+      {
+        path: "/common-code",
+        name: "CommonCode",
+        component: () => import("@/views/pages/code/common-code.vue"),
       },
     ],
   },

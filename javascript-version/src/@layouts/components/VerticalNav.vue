@@ -100,7 +100,7 @@ const handleNavScroll = evt => {
     font-size: 1.25rem;
     font-weight: 500;
     line-height: 1.75rem;
-    text-transform: uppercase;
+    form: uppercase;
   }
 }
 </style>
