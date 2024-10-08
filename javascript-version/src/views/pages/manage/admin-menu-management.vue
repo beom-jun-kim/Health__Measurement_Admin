@@ -144,7 +144,6 @@ const saveAdminRoleMenu = async () => {
                 roleSid: currentRoleSid,
                 nodeList: nodeList
             };
-            console.log("data",data)
             await Manage.patchAdminRoleMenu(data);
             alert("수정되었습니다");
         } catch (e) {

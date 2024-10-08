@@ -179,22 +179,22 @@ export const routes = [
     component: () => import("@/layouts/blank.vue"),
     children: [
       {
-        path: "login",
+        path: "/login",
         name: "Login",
         component: () => import("@/pages/login.vue"),
       },
       {
-        path: "register",
+        path: "/register",
         name: "Register",
         component: () => import("@/pages/register.vue"),
       },
       {
-        path: "findId",
+        path: "/findId",
         name: "FindId",
         component: () => import("@/pages/findId.vue"),
       },
       {
-        path: "findPassword",
+        path: "/findPassword",
         name: "FindPassword",
         component: () => import("@/pages/findPassword.vue"),
       },

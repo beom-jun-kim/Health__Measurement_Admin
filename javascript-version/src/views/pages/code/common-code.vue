@@ -26,7 +26,6 @@ const loadCommonCode = async () => {
     try {
         const response = await CommonCode.getCommonCode()
         commonCodeDateList.value = response.data
-        console.log("commonCodeDateList.value", commonCodeDateList.value)
     } catch (e) {
         console.log("관리자 권한 리스트 조회 실패", error)
     }
@@ -37,7 +36,6 @@ const loadCommonCodeDetail = async (id, type, name, desc) => {
     try {
         const response = await CommonCode.getCommonCodeDetail(type)
         commonCodeDetailDateList.value = response.data
-        console.log("commonCodeDetailDateList.value", commonCodeDetailDateList.value)
     } catch (e) {
         console.log("디테일 조회 실패", e)
     }
