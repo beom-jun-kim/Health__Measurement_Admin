@@ -5,7 +5,7 @@ class GconContainer {
     return await http.get("/code?type=city");
   }
   async getGcon(code, page, size) {
-    return await http.get(`/container?code=${code}&page=${page}&size=${size}`);
+    return await http.get(`/container?detailSid=${code}&page=${page}&size=${size}`);
   }
   async getGconDetail(id) {
     return await http.get(`/container/${id}`);

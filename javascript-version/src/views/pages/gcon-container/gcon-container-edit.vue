@@ -15,7 +15,7 @@ const equipment = ref([]);
 const { loadcudDate, getCudDate } = useCUDDate();
 
 const smaeCityCode = async () => {
-    getThisCity.value = getCityList.value.find((item) => item.code === getGconInfoDetail.value.code);
+    getThisCity.value = getCityList.value.find((item) => item.detailSid === getGconInfoDetail.value.detailSid);
 }
 
 const getCityes = async () => {
@@ -37,12 +37,12 @@ const loadUserDetail = async (id) => {
     }
 }
 
-const gconDetailSave = async (code) => {
+const gconDetailSave = async (detailSid) => {
     if (confirm("저장하시겠습니까?")) {
         try {
             const data = {
-                id: route.params.id,
-                code,
+                containerSid: route.params.id,
+                detailSid,
                 containerName: getGconInfoDetail.value.containerName,
                 latitude: getGconInfoDetail.value.latitude,
                 longitude: getGconInfoDetail.value.longitude,
@@ -100,7 +100,7 @@ onMounted(async () => {
                     </h2>
                 </VCardText>
                 <VCardText v-if="loadcudDate.update" :class="{ 'role': loadcudDate.delete }" class="text-right position-absolute roleBtn">
-                    <VBtn @click="gconDetailSave(getThisCity.code)">저장</VBtn>
+                    <VBtn @click="gconDetailSave(getThisCity.detailSid)">저장</VBtn>
                 </VCardText>
                 <VCardText v-if="loadcudDate.delete" class="text-right position-absolute roleBtn">
                     <VBtn @click="gconDetailDel">삭제</VBtn>
@@ -115,8 +115,8 @@ onMounted(async () => {
 
                         <VCol cols="4">
                             <div class="my-2">지역</div>
-                            <select v-model="getThisCity.code">
-                                <option :value="getCity.code" v-for="(getCity, index) in getCityList" :key="index">
+                            <select v-model="getThisCity.detailSid">
+                                <option :value="getCity.detailSid" v-for="(getCity, index) in getCityList" :key="index">
                                     {{ getCity.name }}</option>
                             </select>
                         </VCol>

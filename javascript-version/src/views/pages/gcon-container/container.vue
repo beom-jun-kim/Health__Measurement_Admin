@@ -17,7 +17,7 @@ const getCityes = async () => {
         const response = await GconContainer.getCityes()
         getCityList.value = response.data;
         if (getCityList.value.length > 0) {
-            selectedCityCode.value = getCityList.value[0].code;
+            selectedCityCode.value = getCityList.value[0].detailSid;
             await getGconList(selectedCityCode.value);
         }
     } catch (error) {
@@ -60,8 +60,8 @@ onMounted(async () => {
                 <VTable style="border-radius: 0;">
                     <tbody v-if="getCityList !== 0" class="text-center">
                         <tr v-for="(city, index) in getCityList" :key="index">
-                            <td @click="getGconList(city.code)" class="cityes"
-                                :class="{ 'active-tab': selectedCityCode === city.code }">
+                            <td @click="getGconList(city.detailSid)" class="cityes"
+                                :class="{ 'active-tab': selectedCityCode === city.detailSid }">
                                 {{ city.name }}
                             </td>
                         </tr>

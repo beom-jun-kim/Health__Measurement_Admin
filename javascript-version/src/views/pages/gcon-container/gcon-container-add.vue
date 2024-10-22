@@ -8,7 +8,7 @@ const route = useRoute();
 
 
 const getGconInfoDetail = ref({
-    code: "",
+    detailSid: "",
     containerName: "",
     latitude: "",
     longitude: "",
@@ -34,11 +34,11 @@ const getCityes = async () => {
 
 
 
-const postGconDetail = async (code) => {
+const postGconDetail = async (detailSid) => {
     if (confirm("저장하시겠습니까?")) {
         try {
             const data = {
-                code,
+                detailSid,
                 containerName: getGconInfoDetail.value.containerName,
                 latitude: getGconInfoDetail.value.latitude,
                 longitude: getGconInfoDetail.value.longitude,
@@ -51,7 +51,7 @@ const postGconDetail = async (code) => {
             alert("저장되었습니다");
             router.push("/gcon-container");
         } catch (error) {
-            console.log("지콘 상세 정보 수정 실패", error);
+            console.log("지콘 상세 정보 등록 실패", error);
         }
     }
 }
@@ -82,7 +82,6 @@ watch(() => getGconInfoDetail.value.rdAdr, (newAddr) => {
 });
 
 const handleAddressUpdate = async (addr) => {
-    console.log("addr", addr);
     try {
         const response = await GconContainer.getLatAndLon(addr)
 
@@ -97,7 +96,7 @@ const handleAddressUpdate = async (addr) => {
 
 onMounted(async () => {
     await getCityes();
-    await smaeCityCode();
+    // await smaeCityCode();
     await getEquipment(route.params.id);
 })
 </script>
@@ -112,7 +111,7 @@ onMounted(async () => {
                     </h2>
                 </VCardText>
                 <VCardText class="text-right position-absolute" style="top: 40px; right: 0;">
-                    <VBtn @click="postGconDetail(getGconInfoDetail.code)">추가</VBtn>
+                    <VBtn @click="postGconDetail(getGconInfoDetail.detailSid)">추가</VBtn>
                 </VCardText>
                 <VCardText>
                     <VRow>
@@ -124,8 +123,8 @@ onMounted(async () => {
 
                         <VCol cols="4">
                             <div class="my-2">지역</div>
-                            <select v-model="getGconInfoDetail.code">
-                                <option :value="getCity.code" v-for="(getCity, index) in getCityList" :key="index">
+                            <select v-model="getGconInfoDetail.detailSid">
+                                <option :value="getCity.detailSid" v-for="(getCity, index) in getCityList" :key="index">
                                     {{ getCity.name }}</option>
                             </select>
                         </VCol>
