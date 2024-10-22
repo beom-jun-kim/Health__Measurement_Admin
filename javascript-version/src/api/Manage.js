@@ -7,13 +7,13 @@ class Manage {
     );
   }
   async getAdminRole() {
-    return await http.get("/role/list");
+    return await http.get("/role/list?roleType=admin");
   }
   async patchAdminRole(data) {
     return await http.patch("/admin/list", data);
   }
   async getAdminRoleList(page, size) {
-    return await http.get(`/role/list?page=${page}&size=${size}`);
+    return await http.get(`/role/page?page=${page}&size=${size}`);
   }
   async postAdminRoleChange(data) {
     return await http.post("/role", data);

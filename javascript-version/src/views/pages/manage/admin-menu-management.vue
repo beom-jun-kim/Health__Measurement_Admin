@@ -166,7 +166,7 @@ onMounted(async () => {
             <VCard title="권한명">
                 <VTable style="border-radius: 0;">
                     <tbody v-if="role !== 0" class="text-center">
-                        <tr v-for="(r, index) in role.content" :key="index">
+                        <tr v-for="(r, index) in role" :key="index">
                             <td @click="loadAdminMenuGroupBy(r.roleSid)" class="roles"
                                 :class="{ 'active-tab': selectedRoleId === r.roleSid }">
                                 {{ r.roleName }}
