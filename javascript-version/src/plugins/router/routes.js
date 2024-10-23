@@ -67,6 +67,18 @@ export const routes = [
           import("@/views/pages/gcon-container/gcon-container-edit.vue"),
       },
       {
+        path: "/cctv-manage-add",
+        name: "CctvManageAdd",
+        component: () =>
+          import("@/views/pages/gcon-container/cctv-manage-add.vue"),
+      },
+      {
+        path: "/cctv-manage/:id",
+        name: "CctvManageEdit",
+        component: () =>
+          import("@/views/pages/gcon-container/cctv-manage-edit.vue"),
+      },
+      {
         path: "/smart-shoes-manage",
         name: "SmartShoesManage",
         component: () =>
@@ -82,6 +94,11 @@ export const routes = [
         path: "/mat-manage",
         name: "MatManage",
         component: () => import("@/views/pages/gcon-container/mat-manage.vue"),
+      },
+      {
+        path: "/cctv-manage",
+        name: "CctvManage",
+        component: () => import("@/views/pages/gcon-container/cctv-manage.vue"),
       },
       {
         path: "/manage/admin-management",
@@ -171,6 +188,11 @@ export const routes = [
         path: "/common-code",
         name: "CommonCode",
         component: () => import("@/views/pages/code/common-code.vue"),
+      },
+      {
+        path: "/control/control-mana",
+        name: "Control",
+        component: () => import("@/views/pages/control/control-mana.vue"),
       },
     ],
   },

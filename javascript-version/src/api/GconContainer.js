@@ -5,7 +5,9 @@ class GconContainer {
     return await http.get("/code?type=city");
   }
   async getGcon(code, page, size) {
-    return await http.get(`/container?detailSid=${code}&page=${page}&size=${size}`);
+    return await http.get(
+      `/container?detailSid=${code}&page=${page}&size=${size}`
+    );
   }
   async getGconDetail(id) {
     return await http.get(`/container/${id}`);
@@ -39,6 +41,23 @@ class GconContainer {
   }
   async shoesPost(data) {
     return await http.post("/shoes", data);
+  }
+  async getCctvList(detailSid, page, size) {
+    return await http.get(
+      `/cctv?detailSid=${detailSid}&page=${page}&size=${size}`
+    );
+  }
+  async getCctvDetail(id) {
+    return await http.get(`/cctv/${id}`);
+  }
+  async patchCctvDetail(data) {
+    return await http.patch("/cctv", data);
+  }
+  async delCctvDetail(id) {
+    return await http.delete(`/cctv/${id}`);
+  }
+  async getCctvIdCommonChk(id) {
+    return await http.get(`/cctv/idcheck?cctvId=${id}`);
   }
 }
 
