@@ -1,19 +1,12 @@
-<p align="center"></p>
+# vue
 
-<p align="center">
-   <a href="https://themeselection.com/item/sneat-free-vuetify-vuejs-admin-template/" target="_blank">
-      <img src="https://cdn.themeselection.com/ts-assets/sneat/logo/logo.png" alt="sneat-logo" width="60px" height="auto">
-   </a>
-</p>
+This template should help get you started developing with Vue 3 in Vite.
 
-<h1 align="center">
-   <a href="https://themeselection.com/item/sneat-free-vuetify-vuejs-admin-template/" target="_blank" align="center">
- Sneat – Vuetify Vuejs Admin Template Free
-   </a>
-</h1>
+## Recommended IDE Setup
 
-<p align="center">Production Ready, Carefully Crafted, Extensive Vuetify Admin Template</p>
+[VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur).
 
+<<<<<<< HEAD
 <p align="center">
    <a href="https://github.com/themeselection/smart-shoes-admin/blob/main/LICENSE">
       <img src="https://img.shields.io/github/license/themeselection/smart-shoes-admin" alt="license">
@@ -28,46 +21,37 @@
 </p>
 
 <kbd>[![Sneat – Vuetify Vuejs Admin Template Demo Screenshot](https://cdn.themeselection.com/ts-assets/sneat/smart-shoes-admin/marketing/smart-shoes-admin-github.png)](https://themeselection.com/item/sneat-free-vuetify-vuejs-admin-template/)</kbd>
+=======
+## Type Support for `.vue` Imports in TS
 
-## Introduction 🚀
+Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates.
+>>>>>>> f2ab6c1487c7a9548bd5b07b2f6053aaed1df885
 
-If you're a developer looking for an admin dashboard that is developer-friendly, rich with features, and highly customizable look no further than Sneat. We've followed the highest industry standards to bring you the very best [VueJS Admin Template](https://themeselection.com/item/category/vuejs-admin-templates/) that is not only fast and easy to use but highly scalable. Offering ultimate convenience and flexibility, you'll be able to build whatever application you want with very little hassle.
+However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can run `Volar: Switch TS Plugin on/off` from VS Code command palette.
 
-- ⚡️ [Vue 3](https://github.com/vuejs/core), [Vite 3](https://github.com/vitejs/vite) & [Vuetify 3](https://next.vuetifyjs.com/en/) - Uses the latest Vuetify 3
-- 🗂 [File based routing](https://github.com/hannoeru/vite-plugin-pages)
-- 📦 [Components auto importing](https://github.com/antfu/unplugin-vue-components)
-- 📑 [Layout system](https://github.com/JohnCampionJr/vite-plugin-vue-layouts)
-- 😃 Use icons from any icon sets with classes by [Iconify](https://iconify.design/)
-- 🌍 I18n ready
-- 🔥 Use the [`<script setup>`](https://vuejs.org/api/sfc-script-setup.html) syntax
-- 📥 [APIs auto importing](https://github.com/antfu/unplugin-auto-import) - use Composition API and others directly
-- 🦾 TypeScript & JavaScript versions
+## Customize configuration
 
+See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+<<<<<<< HEAD
 [View Demo](https://demos.themeselection.com/smart-shoes-admin/demo/dashboard)
+=======
+## Project Setup
+>>>>>>> f2ab6c1487c7a9548bd5b07b2f6053aaed1df885
 
-## Installation ⚒️
+```sh
+npm install
+```
 
-Please [visit](https://demos.themeselection.com/sneat-vuetify-vuejs-admin-template/documentation/guide/installation.html) our docs for the installation guide.
+### Compile and Hot-Reload for Development
 
-## What's Included 📦
+```sh
+npm run dev
+```
 
-- Dashboard
-- Account Settings
-- Pages
-  - Login
-  - Register
-  - Error
-- Typography
-- Box Icons
-- Cards
-- Form layouts
-  - Horizontal Form
-  - Horizontal Form with Icons
-  - Vertical Form
-  - Vertical Form with Icons
-  - Multiple Column
-- Tables
+### Type-Check, Compile and Minify for Production
 
+<<<<<<< HEAD
 
 ## What's in Premium Version 💎
 
@@ -199,3 +183,8 @@ If you want to [Download Free Admin Templates](https://themeselection.com/item/c
 - [Instagram](https://www.instagram.com/themeselection/)
 - [Discord](https://discord.gg/kBHkY7DekX)
 - [YouTube](https://www.youtube.com/channel/UCuryo5s0CW4aP83itLjIdZg)
+=======
+```sh
+npm run build
+```
+>>>>>>> f2ab6c1487c7a9548bd5b07b2f6053aaed1df885
