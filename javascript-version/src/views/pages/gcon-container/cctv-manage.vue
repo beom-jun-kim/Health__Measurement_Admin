@@ -10,7 +10,7 @@ const gConSize = ref(10)
 const gConIndexPage = ref(1)
 const selectedCityCode = ref(null)
 
-const { loadcudDate, getCudDate } = useCUDDate();
+const { loadCudDate, getCudDate } = useCUDDate();
 
 const getCityes = async () => {
     try {
@@ -78,7 +78,7 @@ onMounted(async () => {
         <VCol cols="10">
             <VCard title="배회감지 카메라 리스트">
                 <div class="position-relative">
-                    <VCardText v-if="loadcudDate.create" class="text-right position-absolute"
+                    <VCardText v-if="loadCudDate.create" class="text-right position-absolute"
                         style="top: -70px; right: 0;">
                         <RouterLink to="/cctv-manage-add">추가</RouterLink>
                     </VCardText>

@@ -10,7 +10,7 @@ const size = ref(6)
 const getLabelingSelectData = ref({})
 const chkArr = ref([])
 
-const { loadcudDate, getCudDate } = useCUDDate();
+const { loadCudDate, getCudDate } = useCUDDate();
 
 const loadLabelingImg = async () => {
     try {
@@ -99,10 +99,10 @@ onMounted(async () => {
 
 <template>
     <VCard title="사물인식 라벨링" class="position-relative">
-        <VBtn v-if="loadcudDate.update" class="text-right position-absolute roleBtn" :class="{ 'role': loadcudDate.delete }" @click="saveLabelingDate">
+        <VBtn v-if="loadCudDate.update" class="text-right position-absolute roleBtn" :class="{ 'role': loadCudDate.delete }" @click="saveLabelingDate">
             저장
         </VBtn>
-        <VBtn v-if="loadcudDate.delete" class="text-right position-absolute roleBtn" @click="delLabelingDate">
+        <VBtn v-if="loadCudDate.delete" class="text-right position-absolute roleBtn" @click="delLabelingDate">
             삭제
         </VBtn>
         <div v-if="labelingImgDate.totalElements !== 0" class="px-6 gap-5 labelingImgDateContentWrap">

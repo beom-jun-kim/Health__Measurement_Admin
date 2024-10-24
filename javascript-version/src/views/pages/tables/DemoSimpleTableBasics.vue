@@ -13,7 +13,7 @@ const allSelected = ref('')
 const indexPage = ref(1)
 const searchUsername = ref('')
 
-const { loadcudDate, getCudDate } = useCUDDate();
+const { loadCudDate, getCudDate } = useCUDDate();
 
 const getAllUser = async () => {
   try {
@@ -102,7 +102,7 @@ onUnmounted(() => {
         </VTextField>
       </span>
     </div>
-    <VCardText v-if="loadcudDate.update" class="text-right position-absolute" style="top: -20px; right: 0;">
+    <VCardText v-if="loadCudDate.update" class="text-right position-absolute" style="top: -20px; right: 0;">
       <VBtn @click="statusSave">저장</VBtn>
     </VCardText>
     <VTable>

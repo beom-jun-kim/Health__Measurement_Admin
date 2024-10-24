@@ -1,81 +1,78 @@
 <script setup>
 import GconContainer from '@/api/GconContainer';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
+import throttle from 'lodash/throttle';
+
 
 const router = useRouter();
-const route = useRoute();
-
-
 const getGconInfoDetail = ref({
-    detailSid: "",
-    containerName: "",
+    cctvId: "",
+    cctvName: "",
+    address: "",
+    detailAddress: "",
     latitude: "",
     longitude: "",
-    telno: "",
-    rdAdr: "",
-    remark: "",
-    status: "",
+    state: "",
+    codeDetailSid:"",
 })
-
+const isAvailable = ref(true)
 const lat = ref(false)
 const long = ref(false)
 const getCityList = ref([])
-const equipment = ref([]);
+const getThisCity = ref('')
 
 const getCityes = async () => {
     try {
         const response = await GconContainer.getCityes()
         getCityList.value = response.data;
+        console.log("getCityList.value", getCityList.value)
     } catch (error) {
         console.log("지역리스트 조회 실패", error);
     }
 }
 
-
-
-const postGconDetail = async (detailSid) => {
-    if (confirm("저장하시겠습니까?")) {
+const postGconDetail = async () => {
+    if (confirm("추가하시겠습니까?")) {
         try {
             const data = {
-                detailSid,
-                containerName: getGconInfoDetail.value.containerName,
+                cctvId: getGconInfoDetail.value.cctvId,
+                cctvName: getGconInfoDetail.value.cctvName,
+                address: getGconInfoDetail.value.address,
+                detailAddress: getGconInfoDetail.value.detailAddress,
                 latitude: getGconInfoDetail.value.latitude,
                 longitude: getGconInfoDetail.value.longitude,
-                telno: getGconInfoDetail.value.telno,
-                rdAdr: getGconInfoDetail.value.rdAdr,
-                remark: getGconInfoDetail.value.remark,
-                status: getGconInfoDetail.value.status
+                state: getGconInfoDetail.value.state,
+                codeDetailSid: getGconInfoDetail.value.codeDetailSid,
             }
-            await GconContainer.postGconDetail(data)
-            alert("저장되었습니다");
-            router.push("/gcon-container");
+            await GconContainer.postCctvDetail(data)
+            alert("추가되었습니다");
+            router.push("/cctv-manage");
         } catch (error) {
-            console.log("지콘 상세 정보 등록 실패", error);
+            console.log("배회감지 카메라 상세 정보 등록 실패", error);
         }
     }
 }
 
-const getEquipment = async (id) => {
+const handleChangeCctvId = throttle(async (cctvId) => {
     try {
-        const response = await GconContainer.getEquipment(id)
-        equipment.value = response.data;
-    } catch (error) {
-        console.log("장비 관리 조회 실패", error);
+        const response = await GconContainer.getCctvIdCommonChk(cctvId)
+        isAvailable.value = response.data.isAvailable
+    } catch (e) {
+        console.log("cctv ID 중복 체크 실패", e)
     }
-
-}
+}, 500);
 
 const openPostcode = () => {
     new daum.Postcode({
         oncomplete: function (data) {
             const addr = data.roadAddress || data.jibunAddress;
-            getGconInfoDetail.value.rdAdr = addr;
+            getGconInfoDetail.value.address = addr;
         }
     }).open();
 }
 
-watch(() => getGconInfoDetail.value.rdAdr, (newAddr) => {
+watch(() => getGconInfoDetail.value.address, (newAddr) => {
     if (newAddr) {
         handleAddressUpdate(newAddr);
     }
@@ -96,8 +93,6 @@ const handleAddressUpdate = async (addr) => {
 
 onMounted(async () => {
     await getCityes();
-    // await smaeCityCode();
-    await getEquipment(route.params.id);
 })
 </script>
 
@@ -111,48 +106,58 @@ onMounted(async () => {
                     </h2>
                 </VCardText>
                 <VCardText class="text-right position-absolute" style="top: 40px; right: 0;">
-                    <VBtn @click="postGconDetail(getGconInfoDetail.detailSid)">추가</VBtn>
+                    <VBtn @click="postGconDetail">추가</VBtn>
                 </VCardText>
                 <VCardText>
                     <VRow>
-                        <VCol cols="4">
-                            <div class="my-2">컨테이너명</div>
-                            <VTextField v-model="getGconInfoDetail.containerName"
-                                :value="getGconInfoDetail.containerName" autofocus placeholder="예) 사상구청" />
+                        <VCol cols="6">
+                            <div class="my-2">카메라명</div>
+                            <VTextField v-model="getGconInfoDetail.cctvName" :value="getGconInfoDetail.cctvName" />
                         </VCol>
 
-                        <VCol cols="4">
+                        <VCol cols="6">
+                            <div class="d-flex justify-space-between">
+                                <div class="my-2">카메라 ID</div>
+                                <span v-if="!isAvailable" class="mt-2">이미 있는 ID 입니다</span>
+                            </div>
+                            <VTextField v-model="getGconInfoDetail.cctvId" :value="getGconInfoDetail.cctvId"
+                                @input="handleChangeCctvId(getGconInfoDetail.cctvId)" />
+                        </VCol>
+
+                        <VCol cols="6">
+                            <div class="my-2">상태</div>
+                            <select v-model="getGconInfoDetail.state" class="select">
+                                <option value="NOT_INSTALLED">미설치</option>
+                                <option value="OPERATION">운영중</option>
+                                <option value="INSPECTION">점검중</option>
+                            </select>
+                        </VCol>
+
+                        <VCol cols="6">
                             <div class="my-2">지역</div>
-                            <select v-model="getGconInfoDetail.detailSid">
+                            <select v-model="getGconInfoDetail.codeDetailSid">
                                 <option :value="getCity.detailSid" v-for="(getCity, index) in getCityList" :key="index">
                                     {{ getCity.name }}</option>
                             </select>
                         </VCol>
 
-                        <VCol cols="4">
-                            <div class="my-2">상태</div>
-                            <select v-model="getGconInfoDetail.status" class="select">
-                                <option value="active">운영중</option>
-                                <option value="inactive">납품 진행중</option>
-                                <option value="pending">예약</option>
-                            </select>
-                        </VCol>
-
                         <VCol cols="6">
                             <div class="my-2">주소</div>
-                            <VTextField v-model="getGconInfoDetail.rdAdr" :value="getGconInfoDetail.rdAdr"
-                                @click="openPostcode" placeholder="주소검색" readonly />
+                            <VTextField v-model="getGconInfoDetail.address" :value="getGconInfoDetail.address"
+                                @click="openPostcode" />
 
-                            <div class="mt-4" v-if="lat && long">
-                                <span>위도</span><VTextField class="my-2" readonly>{{ getGconInfoDetail.latitude }}</VTextField>
-                                <span>경도</span><VTextField class="my-2" readonly>{{ getGconInfoDetail.longitude }}</VTextField>
+                            <div class="mt-4">
+                                <span>위도</span>
+                                <VTextField class="my-2" readonly>{{ getGconInfoDetail.latitude }}</VTextField>
+                                <span>경도</span>
+                                <VTextField class="my-2" readonly>{{ getGconInfoDetail.longitude }}</VTextField>
                             </div>
                         </VCol>
 
                         <VCol cols="6">
-                            <div class="my-2">전화번호</div>
-                            <VTextField v-model="getGconInfoDetail.telno" :value="getGconInfoDetail.telno"
-                                placeholder="'-' 없이 입력" />
+                            <div class="my-2">상세주소</div>
+                            <VTextField v-model="getGconInfoDetail.detailAddress"
+                                :value="getGconInfoDetail.detailAddress" />
                         </VCol>
                     </VRow>
                 </VCardText>

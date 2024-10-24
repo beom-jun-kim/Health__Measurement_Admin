@@ -41,7 +41,7 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
         <VSpacer />
 
         <IconBtn
-          href="https://github.com/themeselection/sneat-vuetify-vuejs-admin-template-free"
+          href="https://github.com/themeselection/smart-shoes-admin"
           target="_blank"
           rel="noopener noreferrer"
         >

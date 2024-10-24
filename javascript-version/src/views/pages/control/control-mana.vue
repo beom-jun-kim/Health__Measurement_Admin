@@ -220,7 +220,7 @@ li.active {
 select {
     border: 1px solid rgba(34, 48, 62, 0.217);
     padding: 0 10px;
-    width: 95px;
+    width: 120px;
     height: 40px;
     border-radius: 5px;
     outline: none;

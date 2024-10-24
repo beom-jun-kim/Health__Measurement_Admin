@@ -277,7 +277,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
   <VerticalNavLink
     :item="{
       title: 'Raise Support',
-      href: 'https://github.com/themeselection/sneat-vuetify-vuejs-admin-template-free/issues',
+      href: 'https://github.com/themeselection/smart-shoes-admin/issues',
       icon: 'bx-phone',
       target: '_blank',
     }"

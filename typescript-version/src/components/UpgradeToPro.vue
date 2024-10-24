@@ -19,7 +19,7 @@
       transition="slide-y-reverse-transition"
     >
       <VCard>
-        <VImg src="https://cdn.themeselection.com/ts-assets/sneat/sneat-vuetify-vuejs-admin-template-free/banner/banner.png" />
+        <VImg src="https://cdn.themeselection.com/ts-assets/sneat/smart-shoes-admin/banner/banner.png" />
         <VCardTitle>Sneat - Vuetify Admin Template</VCardTitle>
         <VCardText>
           Sneat Admin is the most developer friendly & highly customisable Admin Dashboard Template based on Vuetify.

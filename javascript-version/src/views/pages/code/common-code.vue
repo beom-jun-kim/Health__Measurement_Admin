@@ -3,7 +3,7 @@ import CommonCode from '@/api/CommonCode';
 import { onMounted } from 'vue';
 import { useCUDDate } from '@/utilityFunc/getCudDate';
 
-const { loadcudDate, getCudDate } = useCUDDate();
+const { loadCudDate, getCudDate } = useCUDDate();
 
 const commonCodeDateList = ref([])
 const commonCodeDetailDateList = ref([])
@@ -213,9 +213,9 @@ onMounted(async () => {
         </VCol>
         <VCol cols="6">
             <VCard title="권한 상세" class="position-relative">
-                <VText v-if="loadcudDate.create" :class="{ 'role': loadcudDate.update }" class="roleBtn"
+                <VText v-if="loadCudDate.create" :class="{ 'role': loadCudDate.update }" class="roleBtn"
                     @click="headerCodeAdd">추가</VText>
-                <VText v-if="loadcudDate.update" class="roleBtn" @click="headerCodeSave">수정</VText>
+                <VText v-if="loadCudDate.update" class="roleBtn" @click="headerCodeSave">수정</VText>
                 <VForm class="mt-6 px-6 pb-6">
                     <VRow>
                         <VCol cols="12">
@@ -234,9 +234,9 @@ onMounted(async () => {
         </VCol>
         <VCol cols="6">
             <VCard title="권한 상세" class="position-relative">
-                <VText v-if="loadcudDate.create" :class="{ 'role': loadcudDate.update }" class="roleBtn"
+                <VText v-if="loadCudDate.create" :class="{ 'role': loadCudDate.update }" class="roleBtn"
                     @click="detailCodeAdd">추가</VText>
-                <VText v-if="loadcudDate.update" class="roleBtn" @click="detailCodeSave">수정</VText>
+                <VText v-if="loadCudDate.update" class="roleBtn" @click="detailCodeSave">수정</VText>
                 <VForm class="mt-6 px-6 pb-6">
                     <VRow>
                         <VCol cols="12">
