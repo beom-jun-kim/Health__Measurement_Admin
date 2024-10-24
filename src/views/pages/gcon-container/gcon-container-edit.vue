@@ -12,7 +12,7 @@ const getCityList = ref([])
 const getThisCity = ref({})
 const equipment = ref([]);
 
-const { loadcudDate, getCudDate } = useCUDDate();
+const { loadCudDate, getCudDate } = useCUDDate();
 
 const smaeCityCode = async () => {
     getThisCity.value = getCityList.value.find((item) => item.detailSid === getGconInfoDetail.value.detailSid);
@@ -51,7 +51,6 @@ const gconDetailSave = async (detailSid) => {
                 remark: getGconInfoDetail.value.remark,
                 status: getGconInfoDetail.value.status
             }
-            console.log("55555", data);
             await GconContainer.patchGconDetail(data)
             alert("저장되었습니다");
         } catch (error) {
@@ -61,13 +60,17 @@ const gconDetailSave = async (detailSid) => {
 }
 
 const gconDetailDel = async () => {
-    if (confirm("삭제하시겠습니까?")) {
-        try {
-            await GconContainer.delGconDetail(route.params.id)
-            alert("삭제되었습니다");
-            router.push("/gcon-container");
-        } catch (error) {
-            console.log("지콘 상세 정보 삭제 실패", error);
+    if(equipment.value.length > 0){
+        alert("현재 컨테이너에는 장비가 있어 삭제할 수 없습니다.\n'자원관리'에서 장비를 삭제하여 주세요")
+    } else {
+        if (confirm("삭제하시겠습니까?")) {
+            try {
+                await GconContainer.delGconDetail(route.params.id)
+                alert("삭제되었습니다");
+                router.push("/gcon-container");
+            } catch (error) {
+                console.log("지콘 상세 정보 삭제 실패", error);
+            }
         }
     }
 }
@@ -81,6 +84,32 @@ const getEquipment = async (id) => {
     }
 
 }
+
+const openPostcode = () => {
+    new daum.Postcode({
+        oncomplete: function (data) {
+            const addr = data.roadAddress || data.jibunAddress;
+            getGconInfoDetail.value.rdAdr = addr;
+        }
+    }).open();
+}
+
+watch(() => getGconInfoDetail.value.rdAdr, (newAddr) => {
+    if (newAddr) {
+        handleAddressUpdate(newAddr);
+    }
+});
+
+const handleAddressUpdate = async (addr) => {
+    try {
+        const response = await GconContainer.getLatAndLon(addr)
+
+        getGconInfoDetail.value.latitude = response.data.latitude
+        getGconInfoDetail.value.longitude = response.data.longitude
+    } catch (error) {
+        console.log("경도 위도 조회 실패", error);
+    }
+};
 
 onMounted(async () => {
     await loadUserDetail(route.params.id);
@@ -99,10 +128,11 @@ onMounted(async () => {
                         GCON 상세
                     </h2>
                 </VCardText>
-                <VCardText v-if="loadcudDate.update" :class="{ 'role': loadcudDate.delete }" class="text-right position-absolute roleBtn">
+                <VCardText v-if="loadCudDate.update" :class="{ 'role': loadCudDate.delete }"
+                    class="text-right position-absolute roleBtn">
                     <VBtn @click="gconDetailSave(getThisCity.detailSid)">저장</VBtn>
                 </VCardText>
-                <VCardText v-if="loadcudDate.delete" class="text-right position-absolute roleBtn">
+                <VCardText v-if="loadCudDate.delete" class="text-right position-absolute roleBtn">
                     <VBtn @click="gconDetailDel">삭제</VBtn>
                 </VCardText>
                 <VCardText>
@@ -132,7 +162,15 @@ onMounted(async () => {
 
                         <VCol cols="6">
                             <div class="my-2">주소</div>
-                            <VTextField v-model="getGconInfoDetail.rdAdr" :value="getGconInfoDetail.rdAdr" />
+                            <VTextField v-model="getGconInfoDetail.rdAdr" :value="getGconInfoDetail.rdAdr"
+                                @click="openPostcode" />
+
+                            <div class="mt-4">
+                                <span>위도</span>
+                                <VTextField class="my-2" readonly>{{ getGconInfoDetail.latitude }}</VTextField>
+                                <span>경도</span>
+                                <VTextField class="my-2" readonly>{{ getGconInfoDetail.longitude }}</VTextField>
+                            </div>
                         </VCol>
 
                         <VCol cols="6">

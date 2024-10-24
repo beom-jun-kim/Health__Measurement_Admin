@@ -2,7 +2,7 @@ import Nav from "@/api/Nav";
 
 export const useCUDDate = () => {
   const cudDate = ref(null);
-  const loadcudDate = ref({
+  const loadCudDate = ref({
     create: false,
     delete: false,
     update: false,
@@ -15,14 +15,14 @@ export const useCUDDate = () => {
     }
     try {
       const response = await Nav.getCUD(cudDate.value);
-      loadcudDate.value = response.data;
+      loadCudDate.value = response.data;
     } catch (e) {
       console.log("cudDate 조회 실패", e);
     }
   };
 
   return {
-    loadcudDate,
+    loadCudDate,
     getCudDate,
   };
 };

@@ -13,7 +13,7 @@ const startDay = ref('')
 const endDay = ref('')
 const category = ref('PRIVACY_POLICY')
 
-const { loadcudDate, getCudDate } = useCUDDate();
+const { loadCudDate, getCudDate } = useCUDDate();
 
 const conList = async () => {
     try {
@@ -62,7 +62,7 @@ onMounted(async () => {
     <div>
         <VCard title="개인정보처리방침 리스트" class="position-relative">
             <div class="px-4">
-                <VBtn v-if="loadcudDate.create" class="text-right position-absolute" style="top: 20px; right: 20px;" @click="smartShoesLocDel">
+                <VBtn v-if="loadCudDate.create" class="text-right position-absolute" style="top: 20px; right: 20px;" @click="smartShoesLocDel">
                     <RouterLink to="/cust-sup-mana/add">추가</RouterLink>
                 </VBtn>
                 <div class="input_date_box align-center d-flex gap-2" style="width: 500px;">

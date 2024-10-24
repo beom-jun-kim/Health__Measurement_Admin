@@ -19,7 +19,6 @@ const getAllUser = async () => {
     try {
         const response = await Control.getControlUserList(searchUser.value, pageUser.value, size.value)
         getAllUserArr.value = response.data;
-        console.log("getAllUserArr.value", getAllUserArr.value)
         await affiliationCode()
         await getAllRole();
     } catch (error) {
@@ -31,7 +30,6 @@ const affiliationCode = async () => {
     try {
         const response = await Control.getAffiliationeUserList()
         affiliationCodeList.value = response.data
-        console.log("affiliationCodeList.value", affiliationCodeList.value)
     } catch (e) {
         console.log('소속코드 조회 실패', e)
     }
@@ -41,7 +39,6 @@ const getAllRole = async () => {
     try {
         const response = await Control.getRoleTypeUserList()
         role.value = response.data;
-        console.log("role.value", role.value)
     } catch (error) {
         console.log("관리자 권한 조회 실패", error);
     }
@@ -220,7 +217,7 @@ li.active {
 select {
     border: 1px solid rgba(34, 48, 62, 0.217);
     padding: 0 10px;
-    width: 95px;
+    width: 120px;
     height: 40px;
     border-radius: 5px;
     outline: none;

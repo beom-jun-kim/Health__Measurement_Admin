@@ -4,7 +4,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { onMounted } from 'vue';
 import { useCUDDate } from '@/utilityFunc/getCudDate';
 
-const { loadcudDate, getCudDate } = useCUDDate();
+const { loadCudDate, getCudDate } = useCUDDate();
 
 const router = useRouter();
 const route = useRoute();
@@ -64,11 +64,11 @@ onMounted(async () => {
                         서비스 이용약관 상세
                     </h2>
                 </VCardText>
-                <VCardText v-if="loadcudDate.update" :class="{ 'role': loadcudDate.delete }"
+                <VCardText v-if="loadCudDate.update" :class="{ 'role': loadCudDate.delete }"
                     class="text-right position-absolute roleBtn">
                     <VBtn @click="gconDetailSave(getGconInfoDetail.boardSid)">수정</VBtn>
                 </VCardText>
-                <VCardText v-if="loadcudDate.delete" class="text-right position-absolute roleBtn">
+                <VCardText v-if="loadCudDate.delete" class="text-right position-absolute roleBtn">
                     <VBtn @click="gconDetailDel">삭제</VBtn>
                 </VCardText>
                 <VCardText>

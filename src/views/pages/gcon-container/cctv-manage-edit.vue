@@ -13,8 +13,7 @@ const getCityList = ref([])
 const getThisCity = ref({})
 const isAvailable = ref(true)
 
-const { loadcudDate, getCudDate } = useCUDDate();
-console.log("loadcudDate",loadcudDate)
+const { loadCudDate, getCudDate } = useCUDDate();
 
 const smaeCityCode = async () => {
     getThisCity.value = getCityList.value.find((item) => item.detailSid === getGconInfoDetail.value.codeDetailSid);
@@ -50,7 +49,8 @@ const gconDetailSave = async (detailSid) => {
                 address: getGconInfoDetail.value.address,
                 latitude: getGconInfoDetail.value.latitude,
                 longitude: getGconInfoDetail.value.longitude,
-                state: getGconInfoDetail.value.state
+                state: getGconInfoDetail.value.state,
+                detailAddress: getGconInfoDetail.value.detailAddress,
             }
             await GconContainer.patchCctvDetail(data)
             alert("저장되었습니다");
@@ -110,7 +110,6 @@ const handleAddressUpdate = async (addr) => {
 onMounted(async () => {
     await loadUserDetail(route.params.id);
     await smaeCityCode();
-    await getEquipment(route.params.id);
     await getCudDate();
 })
 </script>
@@ -124,11 +123,11 @@ onMounted(async () => {
                         배회감지 카메라 상세
                     </h2>
                 </VCardText>
-                <VCardText v-if="loadcudDate.update" :class="{ 'role': loadcudDate.delete }"
+                <VCardText v-if="loadCudDate.update" :class="{ 'role': loadCudDate.delete }"
                     class="text-right position-absolute roleBtn">
                     <VBtn @click="gconDetailSave(getThisCity.detailSid)">저장</VBtn>
                 </VCardText>
-                <VCardText v-if="loadcudDate.delete" class="text-right position-absolute roleBtn">
+                <VCardText v-if="loadCudDate.delete" class="text-right position-absolute roleBtn">
                     <VBtn @click="gconDetailDel">삭제</VBtn>
                 </VCardText>
                 <VCardText>
@@ -179,7 +178,8 @@ onMounted(async () => {
 
                         <VCol cols="6">
                             <div class="my-2">상세주소</div>
-                            <VTextField v-model="getGconInfoDetail.address" :value="getGconInfoDetail.address" />
+                            <VTextField v-model="getGconInfoDetail.detailAddress"
+                                :value="getGconInfoDetail.detailAddress" />
                         </VCol>
                     </VRow>
                 </VCardText>
