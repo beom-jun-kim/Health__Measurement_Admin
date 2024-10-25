@@ -1,8 +1,8 @@
 import http from "../http-common";
 
 class Labeling {
-  async getLabelingImg(page, size) {
-    return await http.get(`/labeling?page=${page}&size=${size}`);
+  async getLabelingImg(page, size,isLabeled) {
+    return await http.get(`/labeling?page=${page}&size=${size}&isLabeled=${isLabeled}`);
   }
   async getLabelingSelect() {
     return await http.get("/labeling/select-options");

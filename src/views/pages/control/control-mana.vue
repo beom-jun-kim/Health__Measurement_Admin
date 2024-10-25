@@ -22,7 +22,7 @@ const getAllUser = async () => {
         await affiliationCode()
         await getAllRole();
     } catch (error) {
-        console.log("관리자 전체조회 실패", error);
+        console.log("관제 유저 전체조회 실패", error);
     }
 }
 
@@ -40,7 +40,7 @@ const getAllRole = async () => {
         const response = await Control.getRoleTypeUserList()
         role.value = response.data;
     } catch (error) {
-        console.log("관리자 권한 조회 실패", error);
+        console.log("관제 유저 권한 조회 실패", error);
     }
 }
 
