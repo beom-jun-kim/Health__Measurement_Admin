@@ -11,7 +11,6 @@ const loadUserDetail = async (id) => {
     try {
         const response = await GconUserManage.getGconUserDetail(id)
         getGconUserDetail.value = response.data;
-        console.log("getGconUserDetail.value",getGconUserDetail.value)
     } catch (error) {
         console.log("유저 전체조회 실패", error);
     }

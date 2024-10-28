@@ -93,7 +93,6 @@ const smartShoesLocDel = async () => {
                     .filter(user => chkArr.value.includes(user.shoesSid))
                     .map(user => user.shoesSid)
                     .join(',');
-                console.log("1", data)
                 await GconContainer.shoesDel(data)
                 alert("삭제되었습니다");
                 await conList();

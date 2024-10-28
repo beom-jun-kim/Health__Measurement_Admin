@@ -20,7 +20,7 @@ const loadCUD = async (id) => {
   try {
     const response = await Nav.getCUD(id)
     CUDDate.value = response.data
-    localStorage.setItem('CUDData', id);
+    localStorage.setItem("CUDData", id)
   } catch (e) {
     console.log("CUD 권한 조회 실패", e)
   }

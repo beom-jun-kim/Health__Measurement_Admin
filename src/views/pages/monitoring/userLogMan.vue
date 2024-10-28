@@ -85,12 +85,12 @@ onUnmounted(() => {
                         </VTextField>
                     </span>
 
-                    <select v-model="selectlocation.containerSid">
-                        <option :value="selectlocation.text" style="display: none;">지역 검색</option>
+                    <select v-model="selectlocation.containerSid" style="color: #B9BDC2;">
+                        <option :value="selectlocation.text" style="display: none;">컨테이너 검색</option>
                         <option :value="locList.containerSid" v-for="(locList, i) in locListDate" :key="i">{{
                             locList.containerName }}</option>
                     </select>
-                    <VBtn @click="locationSearch(selectlocation.containerSid)">컨테이너 검색</VBtn>
+                    <VBtn @click="locationSearch(selectlocation.containerSid)">검색</VBtn>
                 </div>
 
                 <VTable>

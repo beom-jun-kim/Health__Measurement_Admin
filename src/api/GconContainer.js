@@ -53,6 +53,9 @@ class GconContainer {
   async patchCctvDetail(data) {
     return await http.patch("/cctv", data);
   }
+  async postCctvDetail(data) {
+    return await http.post("/cctv", data);
+  }
   async delCctvDetail(id) {
     return await http.delete(`/cctv/${id}`);
   }

@@ -1,9 +1,10 @@
 <script setup>
 import Control from '@/api/Control';
-import Manage from '@/api/Manage';
 import { onMounted, onUnmounted } from 'vue';
 import debounce from 'lodash/debounce';
+import { useCUDDate } from '@/utilityFunc/getCudDate';
 
+const { loadCudDate, getCudDate } = useCUDDate();
 const getAllUserArr = ref([])
 const pageUser = ref(0)
 const size = ref(10)
@@ -14,6 +15,7 @@ const indexPage = ref(1)
 const searchUsername = ref('')
 const role = ref([])
 const affiliationCodeList = ref([])
+
 
 const getAllUser = async () => {
     try {
@@ -75,7 +77,6 @@ const statusSave = async () => {
                         roleSid: user.roleSid,
                         codeDetailSid: user.codeDetailSid
                     }));
-                console.log("data",data)
                 await Control.patchControlUser(data)
                 alert("수정되었습니다");
                 await getAllUser();
@@ -103,6 +104,7 @@ const userSearch = async (searchValue) => {
 
 onMounted(async () => {
     await getAllUser();
+    await getCudDate();
 })
 
 onUnmounted(() => {
@@ -124,7 +126,7 @@ onUnmounted(() => {
                 </span>
             </div>
             <VCardText class="text-right position-absolute" style="top: -20px; right: 0;">
-                <VBtn @click="statusSave">저장</VBtn>
+                <VBtn v-if="loadCudDate.update" @click="statusSave">저장</VBtn>
             </VCardText>
             <VTable>
                 <thead>
