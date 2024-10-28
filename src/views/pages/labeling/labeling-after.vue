@@ -9,12 +9,13 @@ const indexPage = ref(1)
 const size = ref(6)
 const getLabelingSelectData = ref({})
 const chkArr = ref([])
+const isLabeled = ref(true)
 
 const { loadCudDate, getCudDate } = useCUDDate();
 
 const loadLabelingImg = async () => {
     try {
-        const response = await Labeling.getLabelingImg(labelingPage.value, size.value)
+        const response = await Labeling.getLabelingImg(labelingPage.value, size.value, isLabeled.value)
         labelingImgDate.value = response.data
         await loadLabelingSelect()
     } catch (e) {
@@ -74,7 +75,7 @@ const delLabelingDate = async () => {
                 const data = labelingImgDate.value.content
                     .filter(label => chkArr.value.includes(label.id))
                     .map(label => label.id)
-                    .join(',')                
+                    .join(',')
                 await Labeling.delLabelingSelect(data)
                 alert("삭제되었습니다")
                 await loadLabelingImg()
@@ -98,8 +99,9 @@ onMounted(async () => {
 </script>
 
 <template>
-    <VCard title="사물인식 라벨링" class="position-relative">
-        <VBtn v-if="loadCudDate.update" class="text-right position-absolute roleBtn" :class="{ 'role': loadCudDate.delete }" @click="saveLabelingDate">
+    <VCard title="사물인식 라벨링 (수정후)" class="position-relative">
+        <VBtn v-if="loadCudDate.update" class="text-right position-absolute roleBtn"
+            :class="{ 'role': loadCudDate.delete }" @click="saveLabelingDate">
             저장
         </VBtn>
         <VBtn v-if="loadCudDate.delete" class="text-right position-absolute roleBtn" @click="delLabelingDate">
@@ -112,46 +114,31 @@ onMounted(async () => {
                 <span class="idText">ID : {{ labelingImg.id }}</span>
                 <div class="labelingDateWrap">
                     <div class="labelingImgDateBox mr-4">
-                        <img src="http://localhost:8081/uploads/1.png" :alt="`라벨링 이미지 ${index + 1}`"
+                        <img :src="`http://localhost:8081/uploads/${labelingImg.filename}`" :alt="`라벨링 이미지 ${index + 1}`"
                             class="labelingDateBoxImage">
                     </div>
-                    <div class="labelingSelectDateBox w-100">
-                        <select v-model="labelingImg.accessories" multiple size="7" class="accessoriesSelect">
-                            <option :value="accessories.value"
-                                v-for="(accessories, index) in getLabelingSelectData.accessories" @click=""
-                                :key="index">{{
-                                    accessories.label }}</option>
-                        </select>
-                        <select v-model="labelingImg.lowerColor">
-                            <option :value="lowerColors.value"
-                                v-for="(lowerColors, index) in getLabelingSelectData.lowerColors" :key="index">{{
-                                    lowerColors.label }}</option>
-                        </select>
-                        <select v-model="labelingImg.lowerType">
-                            <option :value="lowerTypes.value"
-                                v-for="(lowerTypes, index) in getLabelingSelectData.lowerTypes" :key="index">{{
-                                    lowerTypes.label }}</option>
-                        </select>
-                        <select v-model="labelingImg.upperColor">
-                            <option :value="upperColors.value"
-                                v-for="(upperColors, index) in getLabelingSelectData.upperColors" :key="index">{{
-                                    upperColors.label }}</option>
-                        </select>
-                        <select v-model="labelingImg.upperType">
-                            <option :value="upperTypes.value"
-                                v-for="(upperTypes, index) in getLabelingSelectData.upperTypes" :key="index">{{
-                                    upperTypes.label }}</option>
-                        </select>
-                        <select v-model="labelingImg.ageGroup">
-                            <option :value="ageGroups.value"
-                                v-for="(ageGroups, index) in getLabelingSelectData.ageGroups" :key="index">{{
-                                    ageGroups.label }}</option>
-                        </select>
-                        <select v-model="labelingImg.gender">
-                            <option :value="genders.value" v-for="(genders, index) in getLabelingSelectData.genders"
-                                :key="index">{{
-                                    genders.label }}</option>
-                        </select>
+                    <div class="labelingDateBoxImage w-50">
+                        <v-select v-model="labelingImg.accessories" :items="getLabelingSelectData.accessories"
+                            class="mb-4" item-title="label" item-value="value" label="악세사리" multiple
+                            persistent-hint></v-select>
+
+                        <v-select v-model="labelingImg.lowerColors" :items="getLabelingSelectData.lowerColors"
+                            class="mb-4" item-title="label" item-value="value" label="하의 색상" persistent-hint></v-select>
+
+                        <v-select v-model="labelingImg.lowerType" :items="getLabelingSelectData.lowerTypes" class="mb-4"
+                            item-title="label" item-value="value" label="하의 종류" persistent-hint></v-select>
+
+                        <v-select v-model="labelingImg.upperColor" :items="getLabelingSelectData.upperColors"
+                            class="mb-4" item-title="label" item-value="value" label="상의 색상" persistent-hint></v-select>
+
+                        <v-select v-model="labelingImg.upperType" :items="getLabelingSelectData.upperTypes" class="mb-4"
+                            item-title="label" item-value="value" label="상의 종류" persistent-hint></v-select>
+
+                        <v-select v-model="labelingImg.ageGroup" :items="getLabelingSelectData.ageGroups" class="mb-4"
+                            item-title="label" item-value="value" label="나이대" persistent-hint></v-select>
+
+                        <v-select v-model="labelingImg.gender" :items="getLabelingSelectData.genders" item-title="label"
+                            item-value="value" label="성별" persistent-hint></v-select>
                     </div>
                 </div>
             </div>
@@ -198,42 +185,14 @@ li.active {
     margin-bottom: 30px;
 }
 
+.labelingImgDateBox {
+    width: 100%;
+    height: 360px;
+}
+
 .labelingDateBoxImage {
-    height: 491px;
-}
-
-.labelingSelectDateBox {
-    display: flex;
-    flex-direction: column;
-}
-
-select {
-    border: 1px solid rgba(34, 48, 62, 0.217);
-    padding: 0 10px;
-    border-radius: 5px;
-    outline: none;
-    cursor: pointer;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800px' height='800px' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z' fill='%230F0F0F'/%3E%3C/svg%3E") no-repeat right 10px center;
-    background-size: 16px 16px;
-    height: 40px;
-    margin-bottom: 10px;
-}
-
-.accessoriesSelect {
-    height: auto;
-    background: none;
-    overflow: hidden;
-    padding: 0;
-}
-
-.accessoriesSelect option {
-    padding: 3px 3px 3px 10px;
-    /* border-radius: 5px; */
-}
-
-.accessoriesSelect option:checked {
-    background: #696CFF;
-    color: #fff;
+    width: 100%;
+    height: 100%;
 }
 
 .chkLabeling {

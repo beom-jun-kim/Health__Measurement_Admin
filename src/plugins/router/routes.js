@@ -118,9 +118,14 @@ export const routes = [
           import("@/views/pages/manage/admin-menu-management.vue"),
       },
       {
-        path: "/labeling",
-        name: "Labeling",
-        component: () => import("@/views/pages/labeling/labeling.vue"),
+        path: "/labeling-before",
+        name: "LabelingBefore",
+        component: () => import("@/views/pages/labeling/labeling-before.vue"),
+      },
+      {
+        path: "/labeling-after",
+        name: "LabelingAfter",
+        component: () => import("@/views/pages/labeling/labeling-after.vue"),
       },
       {
         path: "/cust-sup-mana",

@@ -32,8 +32,6 @@ const getCityes = async () => {
     }
 }
 
-
-
 const postGconDetail = async (detailSid) => {
     if (confirm("저장하시겠습니까?")) {
         try {
@@ -54,16 +52,6 @@ const postGconDetail = async (detailSid) => {
             console.log("지콘 상세 정보 등록 실패", error);
         }
     }
-}
-
-const getEquipment = async (id) => {
-    try {
-        const response = await GconContainer.getEquipment(id)
-        equipment.value = response.data;
-    } catch (error) {
-        console.log("장비 관리 조회 실패", error);
-    }
-
 }
 
 const openPostcode = () => {
@@ -96,8 +84,6 @@ const handleAddressUpdate = async (addr) => {
 
 onMounted(async () => {
     await getCityes();
-    // await smaeCityCode();
-    await getEquipment(route.params.id);
 })
 </script>
 
