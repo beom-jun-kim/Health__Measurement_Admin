@@ -1,56 +1,67 @@
 <script setup>
 import Monitoring from '@/api/Monitoring';
 import GconContainer from '@/api/GconContainer';
-import { onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
 import debounce from 'lodash/debounce';
 
-const smartShoesEquArr = ref([])
-const pageSmartShoes = ref(0)
-const size = ref(10)
-const indexPage = ref(1)
-const startDay = ref('')
-const endDay = ref('')
-const searchUsername = ref('')
-const containerName = ref('')
-const locListDate = ref([])
-const selectlocation = ref([{
-    text: ""
-}
-])
+const smartShoesEquArr = ref([]);
+const pageSmartShoes = ref(0);
+const size = ref(10);
+const indexPage = ref(1);
+const startDay = ref('');
+const endDay = ref('');
+const searchUsername = ref('');
+const containerName = ref('');
+const locListDate = ref([]);
+const selectlocation = ref([{ text: '' }]);
 
 const conList = async (searchValue) => {
     try {
         const searchParam = searchValue || '';
-        const response = await Monitoring.getUserLog(startDay.value, endDay.value, searchParam, containerName.value, pageSmartShoes.value, size.value)
+        const response = await Monitoring.getUserLog(
+            startDay.value, 
+            endDay.value, 
+            searchParam, 
+            containerName.value, 
+            pageSmartShoes.value, 
+            size.value
+        );
         smartShoesEquArr.value = response.data;
     } catch (error) {
         console.log("회원 로그 조회 실패", error);
     }
-}
+};
 
 const locationSearch = async (containerSid) => {
     try {
-        const response = await Monitoring.getUserLog(startDay.value, endDay.value, searchUsername.value, containerSid, pageSmartShoes.value, size.value)
+        const response = await Monitoring.getUserLog(
+            startDay.value, 
+            endDay.value, 
+            searchUsername.value, 
+            containerSid, 
+            pageSmartShoes.value, 
+            size.value
+        );
         smartShoesEquArr.value = response.data;
     } catch (error) {
         console.log("회원 로그 조회 실패", error);
     }
-}
+};
 
 const getLocList = async () => {
     try {
-        const response = await GconContainer.gconSelect()
-        locListDate.value = response.data
+        const response = await GconContainer.gconSelect();
+        locListDate.value = response.data;
     } catch (e) {
-        console.log("지역리스트 조회 실패", e)
+        console.log("지역리스트 조회 실패", e);
     }
-}
+};
 
 const indexPageLoadAllUser = async (page) => {
     indexPage.value = page;
     pageSmartShoes.value = page - 1;
     await conList();
-}
+};
 
 const onSearchUsernameChange = debounce(async () => {
     pageSmartShoes.value = 0;
@@ -60,12 +71,15 @@ const onSearchUsernameChange = debounce(async () => {
 onMounted(async () => {
     await conList();
     await getLocList();
-})
+});
 
 onUnmounted(() => {
     onSearchUsernameChange.cancel();
 });
 
+watch([startDay, endDay], () => {
+    conList();
+});
 </script>
 
 <template>
@@ -73,9 +87,9 @@ onUnmounted(() => {
         <VCard title="GCON 회원 로그" class="position-relative">
             <div class="px-4">
                 <div class="input_date_box align-center d-flex gap-2" style="width: 1100px;">
-                    <VTextField v-model="startDay" type="date" @change="conList" />
+                    <VTextField v-model="startDay" type="date" />
                     <span>~</span>
-                    <VTextField v-model="endDay" type="date" @change="conList" />
+                    <VTextField v-model="endDay" type="date" />
 
                     <span class="d-md-flex align-center text-disabled ms-2" style="width:300px;">
                         <VTextField placeholder="회원 이름 검색" v-model="searchUsername" @input="onSearchUsernameChange">
