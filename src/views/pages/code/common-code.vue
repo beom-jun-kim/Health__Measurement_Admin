@@ -94,7 +94,6 @@ const detailCodeAdd = async () => {
             try {
                 const response = await CommonCode.getCommonCodeDetail(roleDetailTextField.value.type)
                 commonCodeDetailDateList.value = response.data
-                console.log("commonCodeDetailDateList.value", commonCodeDetailDateList.value)
             } catch (e) {
                 console.log("디테일 조회 실패", e)
             }
@@ -115,13 +114,11 @@ const detailCodeSave = async () => {
                 description: commonCodeDetailDetailDate.value.desc,
             }
 
-            console.log("1111", data)
             await CommonCode.patchCommonCodeDetailDetail(data)
             alert("수정되었습니다")
             try {
                 const response = await CommonCode.getCommonCodeDetail(roleDetailTextField.value.type)
                 commonCodeDetailDateList.value = response.data
-                console.log("commonCodeDetailDateList.value", commonCodeDetailDateList.value)
             } catch (e) {
                 console.log("디테일 조회 실패", e)
             }

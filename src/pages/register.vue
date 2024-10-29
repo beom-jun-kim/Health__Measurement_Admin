@@ -4,6 +4,7 @@
 // import authV1TopShape from '@images/svg/auth-v1-top-shape.svg?url'
 import UserDataService from '@/api/UserDataService';
 import { useRouter } from 'vue-router';
+import { watch } from 'vue';
 
 const router = useRouter();
 
@@ -24,6 +25,20 @@ const isAuthCodeSentTextTrans = ref(false)
 const signupBtn = ref(true)
 const timer = ref(300)
 const interval = ref(null)
+const existsUser = ref(false)
+
+const idCommonCheck = async (newValue) => {
+  try {
+    const response = await UserDataService.joinIdCommonCheck(newValue)
+    existsUser.value = response.data.existsUser
+  } catch (e) {
+    console.log("아이디 중복 체크 실패", e);
+  }
+}
+
+watch(() => form.value.email, (newValue) => {
+  idCommonCheck(newValue)
+})
 
 const sendAuthCode = async () => {
   clearInterval(interval.value);
@@ -143,7 +158,7 @@ const handleSignUp = async () => {
             회원가입
           </h2>
         </VCardText>
-          <!-- <VCardItem class="justify-center">
+        <!-- <VCardItem class="justify-center">
           <RouterLink to="/" class="app-logo">
             eslint-disable vue/no-v-html
             <div class="d-flex" v-html="logo" />
@@ -162,59 +177,59 @@ const handleSignUp = async () => {
           </p>
         </VCardText> -->
 
-          <VCardText>
-            <VForm @submit.prevent="handleSignUp">
-              <VRow>
-                <VCol cols="12">
-                  <VTextField v-model="form.email" label="아이디" type="email" placeholder="example@email.com" autofocus
-                    :disabled="isAuthCodeSent" required />
-                </VCol>
+        <VCardText>
+          <VForm @submit.prevent="handleSignUp">
+            <VRow>
+              <VCol cols="12">
+                <VTextField v-model="form.email" label="아이디" type="email" placeholder="example@email.com" autofocus
+                  :disabled="isAuthCodeSent" required />
+                  <p v-if="existsUser" class="mt-1 mb-0">이미 있는 아이디입니다</p>
+              </VCol>
 
-                <VCol cols="12">
-                  <VBtn @click="sendAuthCode" block :disabled="isAuthCodeSent">{{ isAuthCodeSentTextTrans === false ?
-                    "인증번호 전송" : "재전송" }}</VBtn>
-                </VCol>
+              <VCol cols="12">
+                <VBtn @click="sendAuthCode" block :disabled="isAuthCodeSent">{{ isAuthCodeSentTextTrans === false ?
+                  "인증번호 전송" : "재전송" }}</VBtn>
+              </VCol>
 
-                <VCol cols="12" v-if="isAuthCodeSentVisible">
-                  <VTextField v-model="form.authCode" label="인증번호" required :disabled="isAuthCodeSent" />
-                </VCol>
+              <VCol cols="12" v-if="isAuthCodeSentVisible">
+                <VTextField v-model="form.authCode" label="인증번호" required :disabled="isAuthCodeSent" />
+              </VCol>
 
-                <VCol cols="12" class="py-0" v-if="isAuthCodeSentVisible">
-                  <p class="mb-0">인증번호가 이메일로 전송되었습니다. 남은시간 {{ formatTime(timer) }}</p>
-                </VCol>
+              <VCol cols="12" class="py-0" v-if="isAuthCodeSentVisible">
+                <p class="mb-0">인증번호가 이메일로 전송되었습니다. 남은시간 {{ formatTime(timer) }}</p>
+              </VCol>
 
-                <VCol cols="12" v-if="isAuthCodeSentVisible">
-                  <VBtn @click="sendAuthEmailCode" block :disabled="isAuthCodeSent">인증번호 확인</VBtn>
-                </VCol>
+              <VCol cols="12" v-if="isAuthCodeSentVisible">
+                <VBtn @click="sendAuthEmailCode" block :disabled="isAuthCodeSent">인증번호 확인</VBtn>
+              </VCol>
 
-                <VCol cols="12">
-                  <VTextField v-model="form.password" label="비밀번호" placeholder="6~16자의 영문 혹은 영문+숫자 조합"
-                    :type="isPasswordVisible ? 'text' : 'password'"
-                    :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
-                    @click:append-inner="isPasswordVisible = !isPasswordVisible" required maxlength="16"
-                    minlength="6" />
-                </VCol>
+              <VCol cols="12">
+                <VTextField v-model="form.password" label="비밀번호" placeholder="6~16자의 영문 혹은 영문+숫자 조합"
+                  :type="isPasswordVisible ? 'text' : 'password'"
+                  :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
+                  @click:append-inner="isPasswordVisible = !isPasswordVisible" required maxlength="16" minlength="6" />
+              </VCol>
 
-                <VCol cols="12">
-                  <VTextField v-model="form.confirmPassword" label="비밀번호 확인"
-                    :type="isPasswordVisible ? 'text' : 'password'"
-                    :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
-                    @click:append-inner="isPasswordVisible = !isPasswordVisible" required />
-                </VCol>
+              <VCol cols="12">
+                <VTextField v-model="form.confirmPassword" label="비밀번호 확인"
+                  :type="isPasswordVisible ? 'text' : 'password'"
+                  :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
+                  @click:append-inner="isPasswordVisible = !isPasswordVisible" required />
+              </VCol>
 
-                <VCol cols="12">
-                  <VTextField v-model="form.username" label="이름" placeholder="홍길동" required />
-                </VCol>
+              <VCol cols="12">
+                <VTextField v-model="form.username" label="이름" placeholder="홍길동" required />
+              </VCol>
 
-                <VCol cols="12">
-                  <VTextField v-model="form.phoneNumber" label="전화번호" placeholder="'-'없이 입력" required />
-                </VCol>
+              <VCol cols="12">
+                <VTextField v-model="form.phoneNumber" label="전화번호" placeholder="'-'없이 입력" required />
+              </VCol>
 
-                <!-- <VCol cols="12">
+              <!-- <VCol cols="12">
                 <VSelect v-model="form.department" label="소속" :items="['본사 개발부', '지사 영업부', '마케팅팀']" required />
               </VCol> -->
 
-                <!-- <VCol cols="12">
+              <!-- <VCol cols="12">
                 <div class="d-flex align-center">
                   <VCheckbox id="privacy-policy" v-model="form.privacyPolicies" inline />
                   <VLabel for="privacy-policy" style="opacity: 1;">
@@ -224,18 +239,18 @@ const handleSignUp = async () => {
                 </div>
               </VCol> -->
 
-                <VCol cols="12">
-                  <VBtn block type="submit" :disabled="signupBtn">회원가입</VBtn>
-                </VCol>
+              <VCol cols="12">
+                <VBtn block type="submit" :disabled="signupBtn">회원가입</VBtn>
+              </VCol>
 
-                <VCol cols="12" class="text-center text-base">
-                  <span>이미 계정이 있으신가요?</span>
-                  <RouterLink class="text-primary ms-1" to="/login">
-                    로그인
-                  </RouterLink>
-                </VCol>
+              <VCol cols="12" class="text-center text-base">
+                <span>이미 계정이 있으신가요?</span>
+                <RouterLink class="text-primary ms-1" to="/login">
+                  로그인
+                </RouterLink>
+              </VCol>
 
-                <!-- <VCol cols="12" class="d-flex align-center">
+              <!-- <VCol cols="12" class="d-flex align-center">
                 <VDivider />
                 <span class="mx-4">or</span>
                 <VDivider />
@@ -244,9 +259,9 @@ const handleSignUp = async () => {
               <VCol cols="12" class="text-center">
                 <AuthProvider />
               </VCol> -->
-              </VRow>
-            </VForm>
-          </VCardText>
+            </VRow>
+          </VForm>
+        </VCardText>
       </VCard>
     </div>
   </div>

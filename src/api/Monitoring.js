@@ -12,5 +12,4 @@ class Monitoring {
     );
   }
 }
-
 export default new Monitoring();

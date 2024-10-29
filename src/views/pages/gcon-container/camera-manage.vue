@@ -25,7 +25,6 @@ const conList = async () => {
     try {
         const response = await Camera.getCamera(pageCamera.value, size.value)
         smartShoesEquArr.value = response.data;
-        console.log("smartShoesEquArr.value",smartShoesEquArr.value)
         await loadGconSelect();
     } catch (error) {
         console.log("카메라 조회 실패", error);
@@ -36,7 +35,6 @@ const loadGconSelect = async () => {
     try {
         const response = await GconContainer.gconSelect()
         gconSelectList.value = response.data;
-        console.log("gconSelectList.value",gconSelectList.value)
     } catch (error) {
         console.log("지콘 리스트 조회 실패", error);
     }
@@ -75,7 +73,6 @@ const smartShoesLocSave = async () => {
                         containerSid: user.containerSid,
                         remark: user.remark,
                     }));
-                console.log(data)
                 await Camera.patchCamera(data)
                 alert("수정되었습니다");
                 await conList();

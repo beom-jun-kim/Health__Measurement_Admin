@@ -34,6 +34,9 @@ class UserDataService {
   async logout() {
     return await http.post("/auth/logout");
   }
+  async joinIdCommonCheck(id) {
+    return await http.get(`/admin/check/${id}`);
+  }
 }
 
 export default new UserDataService();

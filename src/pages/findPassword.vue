@@ -37,7 +37,6 @@ const findPassword = async () => {
         const response = await UserDataService.findpassword(data);
         isAuthCodeSentTextTrans.value = true;
         isAuthCodeSentVisible.value = true;
-        console.log(response, "response");
     } catch (error) {
         console.log("전송 실패", error);
         if (error.response.status === 400 || error.response.status === 404) {
@@ -56,7 +55,6 @@ const sendAuthEmailCode = async () => {
             email: form.value.userId,
             verificationCode: form.value.authCode,
         }
-        console.log(data);
         const response = await UserDataService.verificationEmailChk(data);
         if (response.data.verified === false) {
             alert("인증번호가 일치하지 않습니다");

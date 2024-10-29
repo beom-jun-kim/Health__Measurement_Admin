@@ -17,7 +17,6 @@ const getAllUser = async () => {
     try {
         const response = await Manage.getAdminList(searchUser.value, pageUser.value, size.value)
         getAllUserArr.value = response.data;
-        console.log("getAllUserArr.value",getAllUserArr.value)
         await getAllRole();
     } catch (error) {
         console.log("관리자 전체조회 실패", error);
@@ -28,7 +27,6 @@ const getAllRole = async () => {
     try {
         const response = await Manage.getAdminRole()
         role.value = response.data;
-        console.log("role.value",role.value)
     } catch (error) {
         console.log("관리자 권한 조회 실패", error);
     }

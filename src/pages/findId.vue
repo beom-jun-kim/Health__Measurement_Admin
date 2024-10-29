@@ -15,11 +15,9 @@ const snedMessageBox = ref(false)
 
 const findId = async () => {
     try {
-        console.log(form.value.username, form.value.phoneNumber);
         const response = await UserDataService.findId(form.value.username, form.value.phoneNumber);
         snedMessageBox.value = true;
         snedMessage.value = response.data.userId;
-        console.log(response, "response");
     } catch (error) {
         console.log("전송 실패", error);
     }
